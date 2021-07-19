@@ -150,6 +150,22 @@ namespace HexagonPackage
             return pathCubes;
         }
 
+        public List<Cube> GetRing(int radius)
+        {
+            List<Cube> results = new List<Cube>();
+            Cube cube = this + cubeDirections[2] * radius;
+
+            for (int i = 0; i < 6; i++)
+            {
+                for (int j = 0; j < radius; j++)
+                {
+                    cube = cube.GetNeighbour(i);
+                    results.Add(cube);
+                }
+            }
+            return results;
+        }
+
         public int GetNeighbourDirection(Cube target)
         {
             Cube c = target - this;

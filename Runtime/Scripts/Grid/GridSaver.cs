@@ -53,7 +53,6 @@ namespace HexagonPackage
         private bool AssetAlreadyExist(string name)
         {
             string[] results = AssetDatabase.FindAssets(name, new string[] { folderLocation });
-            Debug.Log(results.Length);
             if (results.Length == 0)
             {
                 return false;

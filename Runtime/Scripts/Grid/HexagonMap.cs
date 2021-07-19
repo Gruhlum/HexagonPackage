@@ -12,6 +12,7 @@ namespace HexagonPackage
 
         [SerializeField]
         private List<Hexagon> values = new List<Hexagon>();
+       
         public void OnAfterDeserialize()
         {
             this.Clear();

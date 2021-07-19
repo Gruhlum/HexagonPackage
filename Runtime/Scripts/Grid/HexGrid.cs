@@ -23,8 +23,6 @@ namespace HexagonPackage
         public event Action<Hexagon> HexagonMouseEnter;
         public event Action<Hexagon> HexagonMouseExit;
 
-        public GameObject go;
-
         private void OnValidate()
         {
             //for (int i = hexagonObjects.Count - 1; i >= 0; i--)
@@ -209,7 +207,7 @@ namespace HexagonPackage
         public List<Hexagon> GetNeighbours(Cube cube)
         {
             List<Cube> neighbours = cube.GetNeighbours();
-            List<Hexagon> validHexes = FindHex(neighbours);
+            List<Hexagon> validHexes = GetHexagons(neighbours);
             return validHexes;
         }
         public List<Hexagon> GetNeighbours(Hexagon hex)
@@ -233,16 +231,22 @@ namespace HexagonPackage
             }
             return false;
         }
-        public Hexagon FindHexagon(Hexagon hex)
+        public Hexagon GetHexagon(Hexagon hex)
         {
-            return FindHex(hex.Cube);
+            return GetHexagon(hex.Cube);
         }
-        public List<Hexagon> FindHex(List<Cube> cubes)
+        public Hexagon GetHexagon(Cube cube)
+        {
+            Hexagons.TryGetValue(cube, out Hexagon hex);
+            return hex;
+        }
+
+        public List<Hexagon> GetHexagons(List<Cube> cubes)
         {
             List<Hexagon> results = new List<Hexagon>();
             foreach (var cube in cubes)
             {
-                Hexagon result = FindHex(cube);
+                Hexagon result = GetHexagon(cube);
                 if (result != null)
                 {
                     results.Add(result);
@@ -250,11 +254,7 @@ namespace HexagonPackage
             }
             return results;
         }
-        public Hexagon FindHex(Cube cube)
-        {
-            Hexagons.TryGetValue(cube, out Hexagon hex);
-            return hex;
-        }
+        
 
         [ContextMenu("Recalculate")]
         private void RecalculatePositions()

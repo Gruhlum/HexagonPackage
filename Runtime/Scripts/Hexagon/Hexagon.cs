@@ -8,6 +8,7 @@ using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using HexagonPackage.HexagonComponents;
+using Exile;
 
 namespace HexagonPackage
 {
@@ -97,6 +98,20 @@ namespace HexagonPackage
             }
         }
         [SerializeField] private Cube cube;
+
+        public Unit Unit
+        {
+            get
+            {
+                return unit;
+            }
+            set
+            {
+                unit = value;
+            }
+        }
+        [SerializeField] private Unit unit = default;
+
 
         public HexGrid HexGrid
         {

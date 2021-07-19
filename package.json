@@ -1,6 +1,6 @@
 {
   "name": "com.hextecgames.hexpackage",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "displayName": "Hex Package",
   "description": "This is a Hex Package",
   "unity": "2020.1",
@@ -12,8 +12,8 @@
     "tiles"
   ],
   "author": {
-    "name": "HexTec Games",
-    "email": "HexTecGames0@example.com"
+    "name": "HexTecGames",
+    "email": "HexTecGames0@gmail.com"
   },
   "hideInEditor": false
 }
