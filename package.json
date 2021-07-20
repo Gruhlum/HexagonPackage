@@ -15,5 +15,17 @@
     "name": "HexTecGames",
     "email": "HexTecGames0@gmail.com"
   },
+  "samples": [
+    {
+      "displayName": "Example 1",
+      "description": "Description for Example 1",
+      "path": "Samples/Example 1"
+    },
+    {
+      "displayName": "Grid Editor",
+      "description": "Description for Example 1",
+      "path": "Samples/GridEditor"
+    }
+  ],
   "hideInEditor": false
 }
