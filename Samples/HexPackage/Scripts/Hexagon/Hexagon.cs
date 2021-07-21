@@ -70,8 +70,6 @@ namespace HexagonPackage
             }
         }
         [SerializeField] private HexagonType type = default;
-
-
         public SpriteRenderer SpriteRenderer
         {
             get
@@ -84,8 +82,6 @@ namespace HexagonPackage
             }
         }
         [SerializeField] private SpriteRenderer spriteRenderer = default;
-
-
         public Cube Cube
         {
             get
@@ -98,7 +94,6 @@ namespace HexagonPackage
             }
         }
         [SerializeField] private Cube cube;
-
         public Unit Unit
         {
             get
@@ -111,8 +106,6 @@ namespace HexagonPackage
             }
         }
         [SerializeField] private Unit unit = default;
-
-
         public HexGrid HexGrid
         {
             get

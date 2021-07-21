@@ -1,6 +1,6 @@
 {
   "name": "com.hextecgames.hexpackage",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "displayName": "Hex Package",
   "description": "This is a Hex Package",
   "unity": "2020.1",
@@ -17,15 +17,11 @@
   },
   "samples": [
     {
-      "displayName": "Example 1",
-      "description": "Description for Example 1",
-      "path": "Samples/Example 1"
-    },
-    {
-      "displayName": "Grid Editor",
-      "description": "Description for Example 1",
-      "path": "Samples/GridEditor"
+      "displayName": "Import",
+      "description": "Import everything",
+      "path": "Samples/HexPackage"
     }
   ],
-  "hideInEditor": false
+  "hideInEditor": true,
+  "type": "template"
 }
