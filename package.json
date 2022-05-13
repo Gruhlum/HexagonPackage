@@ -1,0 +1,27 @@
+{
+  "name": "com.hextecgames.hexpackage",
+  "version": "1.0.2",
+  "displayName": "Hex Package",
+  "description": "This is a Hex Package",
+  "unity": "2020.1",
+  "dependencies": {
+    "com.unity.textmeshpro": "3.0.1"
+  },
+  "keywords": [
+    "hexagon",
+    "tiles"
+  ],
+  "author": {
+    "name": "HexTecGames",
+    "email": "HexTecGames0@gmail.com"
+  },
+  "samples": [
+    {
+      "displayName": "Example 1",
+      "description": "Basic Example",
+      "path": "Samples/Example 1"
+    }
+  ],
+  "hideInEditor": true,
+  "type": "template"
+}

@@ -1,0 +1,8 @@
+Tooltip for Hover Hex
+
+
+Building Conditions (cost)
+
+Different Building Sizes
+
+merge selectionController and BuildInterface
