@@ -530,7 +530,11 @@ MonoBehaviour:
   hexObject: {fileID: 0}
   hexComponents:
   - {fileID: 22698521}
-  data: {fileID: 11400000, guid: 05b5d7eb6eda579489aa0d0e980ed588, type: 2}
+  data:
+    radius: 1.5
+    spacingX: 0
+    spacingY: 0
+    flat: 0
 --- !u!212 &22698523
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -788,7 +792,11 @@ MonoBehaviour:
   hexObject: {fileID: 0}
   hexComponents:
   - {fileID: 43084507}
-  data: {fileID: 11400000, guid: 05b5d7eb6eda579489aa0d0e980ed588, type: 2}
+  data:
+    radius: 1.5
+    spacingX: 0
+    spacingY: 0
+    flat: 0
 --- !u!212 &43084509
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -911,7 +919,11 @@ MonoBehaviour:
   hexObject: {fileID: 0}
   hexComponents:
   - {fileID: 46194775}
-  data: {fileID: 11400000, guid: 05b5d7eb6eda579489aa0d0e980ed588, type: 2}
+  data:
+    radius: 1.5
+    spacingX: 0
+    spacingY: 0
+    flat: 0
 --- !u!212 &46194777
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1439,7 +1451,11 @@ MonoBehaviour:
   hexObject: {fileID: 0}
   hexComponents:
   - {fileID: 130140239}
-  data: {fileID: 11400000, guid: 05b5d7eb6eda579489aa0d0e980ed588, type: 2}
+  data:
+    radius: 1.5
+    spacingX: 0
+    spacingY: 0
+    flat: 0
 --- !u!212 &130140241
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1899,7 +1915,11 @@ MonoBehaviour:
   hexObject: {fileID: 0}
   hexComponents:
   - {fileID: 170001371}
-  data: {fileID: 11400000, guid: 05b5d7eb6eda579489aa0d0e980ed588, type: 2}
+  data:
+    radius: 1.5
+    spacingX: 0
+    spacingY: 0
+    flat: 0
 --- !u!212 &170001373
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2359,7 +2379,11 @@ MonoBehaviour:
   hexObject: {fileID: 0}
   hexComponents:
   - {fileID: 199820541}
-  data: {fileID: 11400000, guid: 05b5d7eb6eda579489aa0d0e980ed588, type: 2}
+  data:
+    radius: 1.5
+    spacingX: 0
+    spacingY: 0
+    flat: 0
 --- !u!212 &199820543
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2607,7 +2631,7 @@ RectTransform:
   m_Children:
   - {fileID: 2128061799}
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -2684,7 +2708,11 @@ MonoBehaviour:
   hexObject: {fileID: 0}
   hexComponents:
   - {fileID: 245831574}
-  data: {fileID: 11400000, guid: 05b5d7eb6eda579489aa0d0e980ed588, type: 2}
+  data:
+    radius: 1.5
+    spacingX: 0
+    spacingY: 0
+    flat: 0
 --- !u!212 &245831576
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2807,7 +2835,11 @@ MonoBehaviour:
   hexObject: {fileID: 0}
   hexComponents:
   - {fileID: 281805892}
-  data: {fileID: 11400000, guid: 05b5d7eb6eda579489aa0d0e980ed588, type: 2}
+  data:
+    radius: 1.5
+    spacingX: 0
+    spacingY: 0
+    flat: 0
 --- !u!212 &281805894
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2930,7 +2962,11 @@ MonoBehaviour:
   hexObject: {fileID: 0}
   hexComponents:
   - {fileID: 283739512}
-  data: {fileID: 11400000, guid: 05b5d7eb6eda579489aa0d0e980ed588, type: 2}
+  data:
+    radius: 1.5
+    spacingX: 0
+    spacingY: 0
+    flat: 0
 --- !u!212 &283739514
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -3188,7 +3224,11 @@ MonoBehaviour:
   hexObject: {fileID: 0}
   hexComponents:
   - {fileID: 310225927}
-  data: {fileID: 11400000, guid: 05b5d7eb6eda579489aa0d0e980ed588, type: 2}
+  data:
+    radius: 1.5
+    spacingX: 0
+    spacingY: 0
+    flat: 0
 --- !u!212 &310225929
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -3581,7 +3621,11 @@ MonoBehaviour:
   hexObject: {fileID: 0}
   hexComponents:
   - {fileID: 365624316}
-  data: {fileID: 11400000, guid: 05b5d7eb6eda579489aa0d0e980ed588, type: 2}
+  data:
+    radius: 1.5
+    spacingX: 0
+    spacingY: 0
+    flat: 0
 --- !u!212 &365624318
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -4277,7 +4321,11 @@ MonoBehaviour:
   hexObject: {fileID: 0}
   hexComponents:
   - {fileID: 480546843}
-  data: {fileID: 11400000, guid: 05b5d7eb6eda579489aa0d0e980ed588, type: 2}
+  data:
+    radius: 1.5
+    spacingX: 0
+    spacingY: 0
+    flat: 0
 --- !u!212 &480546845
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -4400,7 +4448,11 @@ MonoBehaviour:
   hexObject: {fileID: 0}
   hexComponents:
   - {fileID: 482517368}
-  data: {fileID: 11400000, guid: 05b5d7eb6eda579489aa0d0e980ed588, type: 2}
+  data:
+    radius: 1.5
+    spacingX: 0
+    spacingY: 0
+    flat: 0
 --- !u!212 &482517370
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -4759,7 +4811,11 @@ MonoBehaviour:
   hexObject: {fileID: 0}
   hexComponents:
   - {fileID: 517367895}
-  data: {fileID: 11400000, guid: 05b5d7eb6eda579489aa0d0e980ed588, type: 2}
+  data:
+    radius: 1.5
+    spacingX: 0
+    spacingY: 0
+    flat: 0
 --- !u!212 &517367897
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -5368,7 +5424,11 @@ MonoBehaviour:
   hexObject: {fileID: 0}
   hexComponents:
   - {fileID: 590822895}
-  data: {fileID: 11400000, guid: 05b5d7eb6eda579489aa0d0e980ed588, type: 2}
+  data:
+    radius: 1.5
+    spacingX: 0
+    spacingY: 0
+    flat: 0
 --- !u!212 &590822897
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -7428,8 +7488,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hexagonPrefab: {fileID: 8381624969602597271, guid: 9a7a4ba1a82d5694d9ad31193c812627, type: 3}
-  GridToLoad: {fileID: 0}
-  hexagonData: {fileID: 11400000, guid: 05b5d7eb6eda579489aa0d0e980ed588, type: 2}
+  hexagonData:
+    radius: 1.5
+    spacingX: 0
+    spacingY: 0
+    flat: 0
 --- !u!1 &877600794
 GameObject:
   m_ObjectHideFlags: 0
@@ -7601,7 +7664,11 @@ MonoBehaviour:
   hexObject: {fileID: 0}
   hexComponents:
   - {fileID: 889054982}
-  data: {fileID: 11400000, guid: 05b5d7eb6eda579489aa0d0e980ed588, type: 2}
+  data:
+    radius: 1.5
+    spacingX: 0
+    spacingY: 0
+    flat: 0
 --- !u!212 &889054984
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -7724,7 +7791,11 @@ MonoBehaviour:
   hexObject: {fileID: 0}
   hexComponents:
   - {fileID: 894296261}
-  data: {fileID: 11400000, guid: 05b5d7eb6eda579489aa0d0e980ed588, type: 2}
+  data:
+    radius: 1.5
+    spacingX: 0
+    spacingY: 0
+    flat: 0
 --- !u!212 &894296263
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -7847,7 +7918,11 @@ MonoBehaviour:
   hexObject: {fileID: 0}
   hexComponents:
   - {fileID: 897971099}
-  data: {fileID: 11400000, guid: 05b5d7eb6eda579489aa0d0e980ed588, type: 2}
+  data:
+    radius: 1.5
+    spacingX: 0
+    spacingY: 0
+    flat: 0
 --- !u!212 &897971101
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -7970,7 +8045,11 @@ MonoBehaviour:
   hexObject: {fileID: 0}
   hexComponents:
   - {fileID: 907112394}
-  data: {fileID: 11400000, guid: 05b5d7eb6eda579489aa0d0e980ed588, type: 2}
+  data:
+    radius: 1.5
+    spacingX: 0
+    spacingY: 0
+    flat: 0
 --- !u!212 &907112396
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -8228,7 +8307,11 @@ MonoBehaviour:
   hexObject: {fileID: 0}
   hexComponents:
   - {fileID: 927156279}
-  data: {fileID: 11400000, guid: 05b5d7eb6eda579489aa0d0e980ed588, type: 2}
+  data:
+    radius: 1.5
+    spacingX: 0
+    spacingY: 0
+    flat: 0
 --- !u!212 &927156281
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -8486,7 +8569,11 @@ MonoBehaviour:
   hexObject: {fileID: 0}
   hexComponents:
   - {fileID: 937361546}
-  data: {fileID: 11400000, guid: 05b5d7eb6eda579489aa0d0e980ed588, type: 2}
+  data:
+    radius: 1.5
+    spacingX: 0
+    spacingY: 0
+    flat: 0
 --- !u!212 &937361548
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -8589,7 +8676,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &954238910
 GameObject:
@@ -8762,7 +8849,11 @@ MonoBehaviour:
   hexObject: {fileID: 0}
   hexComponents:
   - {fileID: 962862377}
-  data: {fileID: 11400000, guid: 05b5d7eb6eda579489aa0d0e980ed588, type: 2}
+  data:
+    radius: 1.5
+    spacingX: 0
+    spacingY: 0
+    flat: 0
 --- !u!212 &962862379
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -8885,7 +8976,11 @@ MonoBehaviour:
   hexObject: {fileID: 0}
   hexComponents:
   - {fileID: 974940280}
-  data: {fileID: 11400000, guid: 05b5d7eb6eda579489aa0d0e980ed588, type: 2}
+  data:
+    radius: 1.5
+    spacingX: 0
+    spacingY: 0
+    flat: 0
 --- !u!212 &974940282
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -9143,7 +9238,11 @@ MonoBehaviour:
   hexObject: {fileID: 0}
   hexComponents:
   - {fileID: 983312995}
-  data: {fileID: 11400000, guid: 05b5d7eb6eda579489aa0d0e980ed588, type: 2}
+  data:
+    radius: 1.5
+    spacingX: 0
+    spacingY: 0
+    flat: 0
 --- !u!212 &983312997
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -9502,7 +9601,11 @@ MonoBehaviour:
   hexObject: {fileID: 0}
   hexComponents:
   - {fileID: 1017138753}
-  data: {fileID: 11400000, guid: 05b5d7eb6eda579489aa0d0e980ed588, type: 2}
+  data:
+    radius: 1.5
+    spacingX: 0
+    spacingY: 0
+    flat: 0
 --- !u!212 &1017138755
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -9625,7 +9728,11 @@ MonoBehaviour:
   hexObject: {fileID: 0}
   hexComponents:
   - {fileID: 1043637988}
-  data: {fileID: 11400000, guid: 05b5d7eb6eda579489aa0d0e980ed588, type: 2}
+  data:
+    radius: 1.5
+    spacingX: 0
+    spacingY: 0
+    flat: 0
 --- !u!212 &1043637990
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -9849,7 +9956,11 @@ MonoBehaviour:
   hexObject: {fileID: 0}
   hexComponents:
   - {fileID: 1071464756}
-  data: {fileID: 11400000, guid: 05b5d7eb6eda579489aa0d0e980ed588, type: 2}
+  data:
+    radius: 1.5
+    spacingX: 0
+    spacingY: 0
+    flat: 0
 --- !u!212 &1071464758
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -10174,7 +10285,11 @@ MonoBehaviour:
   hexObject: {fileID: 0}
   hexComponents:
   - {fileID: 1091968300}
-  data: {fileID: 11400000, guid: 05b5d7eb6eda579489aa0d0e980ed588, type: 2}
+  data:
+    radius: 1.5
+    spacingX: 0
+    spacingY: 0
+    flat: 0
 --- !u!212 &1091968302
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -10398,7 +10513,11 @@ MonoBehaviour:
   hexObject: {fileID: 0}
   hexComponents:
   - {fileID: 1106997717}
-  data: {fileID: 11400000, guid: 05b5d7eb6eda579489aa0d0e980ed588, type: 2}
+  data:
+    radius: 1.5
+    spacingX: 0
+    spacingY: 0
+    flat: 0
 --- !u!212 &1106997719
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -10656,7 +10775,11 @@ MonoBehaviour:
   hexObject: {fileID: 0}
   hexComponents:
   - {fileID: 1139975691}
-  data: {fileID: 11400000, guid: 05b5d7eb6eda579489aa0d0e980ed588, type: 2}
+  data:
+    radius: 1.5
+    spacingX: 0
+    spacingY: 0
+    flat: 0
 --- !u!212 &1139975693
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -11217,7 +11340,11 @@ MonoBehaviour:
   hexObject: {fileID: 0}
   hexComponents:
   - {fileID: 1153897623}
-  data: {fileID: 11400000, guid: 05b5d7eb6eda579489aa0d0e980ed588, type: 2}
+  data:
+    radius: 1.5
+    spacingX: 0
+    spacingY: 0
+    flat: 0
 --- !u!212 &1153897625
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -11340,7 +11467,11 @@ MonoBehaviour:
   hexObject: {fileID: 0}
   hexComponents:
   - {fileID: 1155368668}
-  data: {fileID: 11400000, guid: 05b5d7eb6eda579489aa0d0e980ed588, type: 2}
+  data:
+    radius: 1.5
+    spacingX: 0
+    spacingY: 0
+    flat: 0
 --- !u!212 &1155368670
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -11463,7 +11594,11 @@ MonoBehaviour:
   hexObject: {fileID: 0}
   hexComponents:
   - {fileID: 1171925393}
-  data: {fileID: 11400000, guid: 05b5d7eb6eda579489aa0d0e980ed588, type: 2}
+  data:
+    radius: 1.5
+    spacingX: 0
+    spacingY: 0
+    flat: 0
 --- !u!212 &1171925395
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -11957,7 +12092,11 @@ MonoBehaviour:
   hexObject: {fileID: 0}
   hexComponents:
   - {fileID: 1189443895}
-  data: {fileID: 11400000, guid: 05b5d7eb6eda579489aa0d0e980ed588, type: 2}
+  data:
+    radius: 1.5
+    spacingX: 0
+    spacingY: 0
+    flat: 0
 --- !u!212 &1189443897
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -12080,7 +12219,11 @@ MonoBehaviour:
   hexObject: {fileID: 0}
   hexComponents:
   - {fileID: 1196422834}
-  data: {fileID: 11400000, guid: 05b5d7eb6eda579489aa0d0e980ed588, type: 2}
+  data:
+    radius: 1.5
+    spacingX: 0
+    spacingY: 0
+    flat: 0
 --- !u!212 &1196422836
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -12540,7 +12683,11 @@ MonoBehaviour:
   hexObject: {fileID: 0}
   hexComponents:
   - {fileID: 1256115313}
-  data: {fileID: 11400000, guid: 05b5d7eb6eda579489aa0d0e980ed588, type: 2}
+  data:
+    radius: 1.5
+    spacingX: 0
+    spacingY: 0
+    flat: 0
 --- !u!212 &1256115315
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -14180,7 +14327,11 @@ MonoBehaviour:
   hexObject: {fileID: 0}
   hexComponents:
   - {fileID: 1390390801}
-  data: {fileID: 11400000, guid: 05b5d7eb6eda579489aa0d0e980ed588, type: 2}
+  data:
+    radius: 1.5
+    spacingX: 0
+    spacingY: 0
+    flat: 0
 --- !u!212 &1390390803
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -14707,7 +14858,11 @@ MonoBehaviour:
   hexObject: {fileID: 0}
   hexComponents:
   - {fileID: 1434620579}
-  data: {fileID: 11400000, guid: 05b5d7eb6eda579489aa0d0e980ed588, type: 2}
+  data:
+    radius: 1.5
+    spacingX: 0
+    spacingY: 0
+    flat: 0
 --- !u!212 &1434620581
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -15336,7 +15491,11 @@ MonoBehaviour:
   hexObject: {fileID: 0}
   hexComponents:
   - {fileID: 1491154403}
-  data: {fileID: 11400000, guid: 05b5d7eb6eda579489aa0d0e980ed588, type: 2}
+  data:
+    radius: 1.5
+    spacingX: 0
+    spacingY: 0
+    flat: 0
 --- !u!212 &1491154405
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -15459,7 +15618,11 @@ MonoBehaviour:
   hexObject: {fileID: 0}
   hexComponents:
   - {fileID: 1502079892}
-  data: {fileID: 11400000, guid: 05b5d7eb6eda579489aa0d0e980ed588, type: 2}
+  data:
+    radius: 1.5
+    spacingX: 0
+    spacingY: 0
+    flat: 0
 --- !u!212 &1502079894
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -15543,7 +15706,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d476aea1f3677c44a0de5b5f789cd2d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  folderLocation: Assets/_Warlords/ScriptableObjects/SavedGrids
+  folderLocation: Assets/ScriptableObjects/SavedGrids
   name: HexagonGrid
   hexagonGrid: {fileID: 844954647}
 --- !u!114 &1507899271
@@ -15561,8 +15724,9 @@ MonoBehaviour:
   ActiveGrid: {fileID: 844954647}
   EditGrid: {fileID: 1784393834}
   selectedType: {fileID: 11400000, guid: 8e918e07291e2d4489e819d7da38cdbc, type: 2}
-  hexagonSelector: {fileID: 943479516}
+  selectionController: {fileID: 943479516}
   showCoordinates: 1
+  editType: {fileID: 0}
 --- !u!114 &1507899272
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15577,6 +15741,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Grid: {fileID: 844954647}
   GridToLoad: {fileID: 11400000, guid: 4ff1c368ed0846945ae13b886d5cc518, type: 2}
+  LoadOnAwake: 0
 --- !u!4 &1507899273
 Transform:
   m_ObjectHideFlags: 0
@@ -15932,7 +16097,11 @@ MonoBehaviour:
   hexObject: {fileID: 0}
   hexComponents:
   - {fileID: 1570120513}
-  data: {fileID: 11400000, guid: 05b5d7eb6eda579489aa0d0e980ed588, type: 2}
+  data:
+    radius: 1.5
+    spacingX: 0
+    spacingY: 0
+    flat: 0
 --- !u!212 &1570120515
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -16527,7 +16696,11 @@ MonoBehaviour:
   hexObject: {fileID: 0}
   hexComponents:
   - {fileID: 1688423331}
-  data: {fileID: 11400000, guid: 05b5d7eb6eda579489aa0d0e980ed588, type: 2}
+  data:
+    radius: 1.5
+    spacingX: 0
+    spacingY: 0
+    flat: 0
 --- !u!212 &1688423333
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -16847,7 +17020,11 @@ MonoBehaviour:
   hexObject: {fileID: 0}
   hexComponents:
   - {fileID: 1701581148}
-  data: {fileID: 11400000, guid: 05b5d7eb6eda579489aa0d0e980ed588, type: 2}
+  data:
+    radius: 1.5
+    spacingX: 0
+    spacingY: 0
+    flat: 0
 --- !u!212 &1701581150
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -16970,7 +17147,11 @@ MonoBehaviour:
   hexObject: {fileID: 0}
   hexComponents:
   - {fileID: 1728995193}
-  data: {fileID: 11400000, guid: 05b5d7eb6eda579489aa0d0e980ed588, type: 2}
+  data:
+    radius: 1.5
+    spacingX: 0
+    spacingY: 0
+    flat: 0
 --- !u!212 &1728995195
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -17329,7 +17510,11 @@ MonoBehaviour:
   hexObject: {fileID: 0}
   hexComponents:
   - {fileID: 1767254830}
-  data: {fileID: 11400000, guid: 05b5d7eb6eda579489aa0d0e980ed588, type: 2}
+  data:
+    radius: 1.5
+    spacingX: 0
+    spacingY: 0
+    flat: 0
 --- !u!212 &1767254832
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -17587,7 +17772,11 @@ MonoBehaviour:
   hexObject: {fileID: 0}
   hexComponents:
   - {fileID: 1776743901}
-  data: {fileID: 11400000, guid: 05b5d7eb6eda579489aa0d0e980ed588, type: 2}
+  data:
+    radius: 1.5
+    spacingX: 0
+    spacingY: 0
+    flat: 0
 --- !u!212 &1776743903
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -17804,9 +17993,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f087ca42c785654cabf2e74fb162e71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hexagonPrefab: {fileID: 8381624969602597271, guid: 9a7a4ba1a82d5694d9ad31193c812627, type: 3}
-  GridToLoad: {fileID: 0}
-  hexagonData: {fileID: 11400000, guid: 05b5d7eb6eda579489aa0d0e980ed588, type: 2}
+  hexagonPrefab: {fileID: 8381624969602597271, guid: 5a8838c0b027fbc4b8e97f077ed5580f, type: 3}
+  hexagonData:
+    radius: 1.5
+    spacingX: 0
+    spacingY: 0
+    flat: 0
 --- !u!4 &1784393835
 Transform:
   m_ObjectHideFlags: 0
@@ -17892,7 +18084,11 @@ MonoBehaviour:
   hexObject: {fileID: 0}
   hexComponents:
   - {fileID: 1787077149}
-  data: {fileID: 11400000, guid: 05b5d7eb6eda579489aa0d0e980ed588, type: 2}
+  data:
+    radius: 1.5
+    spacingX: 0
+    spacingY: 0
+    flat: 0
 --- !u!212 &1787077151
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -18251,7 +18447,11 @@ MonoBehaviour:
   hexObject: {fileID: 0}
   hexComponents:
   - {fileID: 1820908613}
-  data: {fileID: 11400000, guid: 05b5d7eb6eda579489aa0d0e980ed588, type: 2}
+  data:
+    radius: 1.5
+    spacingX: 0
+    spacingY: 0
+    flat: 0
 --- !u!212 &1820908615
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -18374,7 +18574,11 @@ MonoBehaviour:
   hexObject: {fileID: 0}
   hexComponents:
   - {fileID: 1833820054}
-  data: {fileID: 11400000, guid: 05b5d7eb6eda579489aa0d0e980ed588, type: 2}
+  data:
+    radius: 1.5
+    spacingX: 0
+    spacingY: 0
+    flat: 0
 --- !u!212 &1833820056
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -18497,7 +18701,11 @@ MonoBehaviour:
   hexObject: {fileID: 0}
   hexComponents:
   - {fileID: 1841408618}
-  data: {fileID: 11400000, guid: 05b5d7eb6eda579489aa0d0e980ed588, type: 2}
+  data:
+    radius: 1.5
+    spacingX: 0
+    spacingY: 0
+    flat: 0
 --- !u!212 &1841408620
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -18890,7 +19098,11 @@ MonoBehaviour:
   hexObject: {fileID: 0}
   hexComponents:
   - {fileID: 1879395935}
-  data: {fileID: 11400000, guid: 05b5d7eb6eda579489aa0d0e980ed588, type: 2}
+  data:
+    radius: 1.5
+    spacingX: 0
+    spacingY: 0
+    flat: 0
 --- !u!212 &1879395937
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -19249,7 +19461,11 @@ MonoBehaviour:
   hexObject: {fileID: 0}
   hexComponents:
   - {fileID: 1897167957}
-  data: {fileID: 11400000, guid: 05b5d7eb6eda579489aa0d0e980ed588, type: 2}
+  data:
+    radius: 1.5
+    spacingX: 0
+    spacingY: 0
+    flat: 0
 --- !u!212 &1897167959
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -19574,7 +19790,11 @@ MonoBehaviour:
   hexObject: {fileID: 0}
   hexComponents:
   - {fileID: 1914299782}
-  data: {fileID: 11400000, guid: 05b5d7eb6eda579489aa0d0e980ed588, type: 2}
+  data:
+    radius: 1.5
+    spacingX: 0
+    spacingY: 0
+    flat: 0
 --- !u!212 &1914299784
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -20101,7 +20321,11 @@ MonoBehaviour:
   hexObject: {fileID: 0}
   hexComponents:
   - {fileID: 1956563762}
-  data: {fileID: 11400000, guid: 05b5d7eb6eda579489aa0d0e980ed588, type: 2}
+  data:
+    radius: 1.5
+    spacingX: 0
+    spacingY: 0
+    flat: 0
 --- !u!212 &1956563764
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -20525,53 +20749,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1971894010}
   m_CullTransparentMesh: 0
---- !u!1 &1996399226
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1996399228}
-  - component: {fileID: 1996399227}
-  m_Layer: 0
-  m_Name: EditGridController
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1996399227
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1996399226}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3c5b4c62ce859db4b9dc151f53e685d2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  activeGrid: {fileID: 844954647}
-  editGrid: {fileID: 1784393834}
-  editType: {fileID: 11400000, guid: c435bdeae0ce47d4b905c5584b0bec59, type: 2}
---- !u!4 &1996399228
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1996399226}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2000848242
 GameObject:
   m_ObjectHideFlags: 0
@@ -20777,7 +20954,11 @@ MonoBehaviour:
   hexObject: {fileID: 0}
   hexComponents:
   - {fileID: 2023289147}
-  data: {fileID: 11400000, guid: 05b5d7eb6eda579489aa0d0e980ed588, type: 2}
+  data:
+    radius: 1.5
+    spacingX: 0
+    spacingY: 0
+    flat: 0
 --- !u!212 &2023289149
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -21001,7 +21182,11 @@ MonoBehaviour:
   hexObject: {fileID: 0}
   hexComponents:
   - {fileID: 2028142738}
-  data: {fileID: 11400000, guid: 05b5d7eb6eda579489aa0d0e980ed588, type: 2}
+  data:
+    radius: 1.5
+    spacingX: 0
+    spacingY: 0
+    flat: 0
 --- !u!212 &2028142740
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -21124,7 +21309,11 @@ MonoBehaviour:
   hexObject: {fileID: 0}
   hexComponents:
   - {fileID: 2029015030}
-  data: {fileID: 11400000, guid: 05b5d7eb6eda579489aa0d0e980ed588, type: 2}
+  data:
+    radius: 1.5
+    spacingX: 0
+    spacingY: 0
+    flat: 0
 --- !u!212 &2029015032
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -21382,7 +21571,11 @@ MonoBehaviour:
   hexObject: {fileID: 0}
   hexComponents:
   - {fileID: 2050280592}
-  data: {fileID: 11400000, guid: 05b5d7eb6eda579489aa0d0e980ed588, type: 2}
+  data:
+    radius: 1.5
+    spacingX: 0
+    spacingY: 0
+    flat: 0
 --- !u!212 &2050280594
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -21505,7 +21698,11 @@ MonoBehaviour:
   hexObject: {fileID: 0}
   hexComponents:
   - {fileID: 2075745771}
-  data: {fileID: 11400000, guid: 05b5d7eb6eda579489aa0d0e980ed588, type: 2}
+  data:
+    radius: 1.5
+    spacingX: 0
+    spacingY: 0
+    flat: 0
 --- !u!212 &2075745773
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -21858,6 +22055,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f231c4fb786f3946a6b90b886c48677, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_SendPointerHoverToParent: 1
   m_HorizontalAxis: Horizontal
   m_VerticalAxis: Vertical
   m_SubmitButton: Submit
@@ -21893,7 +22091,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2099108350
 GameObject:
@@ -22100,7 +22298,11 @@ MonoBehaviour:
   hexObject: {fileID: 0}
   hexComponents:
   - {fileID: 2100508011}
-  data: {fileID: 11400000, guid: 05b5d7eb6eda579489aa0d0e980ed588, type: 2}
+  data:
+    radius: 1.5
+    spacingX: 0
+    spacingY: 0
+    flat: 0
 --- !u!212 &2100508013
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -22560,7 +22762,11 @@ MonoBehaviour:
   hexObject: {fileID: 0}
   hexComponents:
   - {fileID: 2120560507}
-  data: {fileID: 11400000, guid: 05b5d7eb6eda579489aa0d0e980ed588, type: 2}
+  data:
+    radius: 1.5
+    spacingX: 0
+    spacingY: 0
+    flat: 0
 --- !u!212 &2120560509
 SpriteRenderer:
   m_ObjectHideFlags: 0

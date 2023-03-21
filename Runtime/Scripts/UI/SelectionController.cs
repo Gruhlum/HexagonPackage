@@ -2,6 +2,7 @@ using HexTecGames.Basics;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Collections;
 using UnityEngine;
 
 namespace HexagonPackage
@@ -12,7 +13,7 @@ namespace HexagonPackage
 
         [SerializeField] private Camera mainCam = default;
 
-        [SerializeField] public Spawner<HexHighlighter> highlightSpawner = default;//change to private
+        [SerializeField] private Spawner<HexHighlighter> highlightSpawner = default;
 
         public event Action<Hexagon> MouseHover_Changed;
         public event Action<Hexagon, int> Hexagon_Clicked;
@@ -51,7 +52,7 @@ namespace HexagonPackage
                 MouseHover_Changed?.Invoke(hoverHexagon);
             }
         }
-        [SerializeField] private Hexagon hoverHexagon = default;
+        private Hexagon hoverHexagon = default;
 
         private void Reset()
         {

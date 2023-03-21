@@ -8,6 +8,7 @@ using UnityEditor;
 
 namespace HexagonPackage
 {
+    [RequireComponent(typeof(SelectionController))]
     public class GridEditor : MonoBehaviour
     {
         public HexGrid ActiveGrid;
@@ -18,7 +19,7 @@ namespace HexagonPackage
         private bool enableHoverClick = false;
         int lastButton;
 
-        [SerializeField] private SelectionController hexagonSelector = default;
+        [SerializeField] private SelectionController selectionController = default;
 
         public bool ShowCoordinates
         {
@@ -32,9 +33,83 @@ namespace HexagonPackage
             }
         }
         [SerializeField] private bool showCoordinates = default;
+        private void Reset()
+        {
+            selectionController = GetComponent<SelectionController>();
+        }
+        private void ActiveGrid_HexagonRemoved(Hexagon hex)
+        {
+            List<Cube> neighbours = hex.Cube.GetNeighbours();
 
+            foreach (var neighbour in neighbours)
+            {
+                if (EditGrid.Contains(neighbour))
+                {
+
+                    if (IsAdjacentToActiveHex(neighbour, hex))
+                    {
+                        EditGrid.RemoveHexagon(neighbour);
+                    }
+                }
+            }
+            foreach (var neighbour in neighbours)
+            {
+                if (ActiveGrid.Contains(neighbour))
+                {
+                    EditGrid.CreateHexagon(hex.Cube);
+                    return;
+                }
+            }
+        }
+
+        private bool IsAdjacentToActiveHex(Cube neighbour, Hexagon origin)
+        {
+            foreach (var neighboursNeighbour in neighbour.GetNeighbours())
+            {
+                if (neighboursNeighbour != origin.Cube && ActiveGrid.Contains(neighboursNeighbour))
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        private void ActiveGrid_HexagonCreated(Hexagon hex)
+        {
+            EditGrid.RemoveHexagon(hex.Cube);
+            List<Cube> neighbours = hex.Cube.GetNeighbours();
+            foreach (var neighbour in neighbours)
+            {
+                // Is it already in the list or does a hex already exist at that position?
+                if (!ActiveGrid.Contains(neighbour) && !EditGrid.Contains(neighbour))
+                {
+                    EditGrid.CreateHexagon(neighbour);
+                }
+            }
+        }
+
+        private void CreateEditGrid()
+        {
+            EditGrid.RemoveAll();
+            foreach (var hex in ActiveGrid.Hexagons.Values)
+            {
+                List<Cube> neighbours = hex.Cube.GetNeighbours();
+                foreach (var neighbour in neighbours)
+                {
+                    // Is it already in the list or does a hex already exist at that position?
+                    if (!ActiveGrid.Contains(neighbour) && !EditGrid.Contains(neighbour))
+                    {
+                        EditGrid.CreateHexagon(neighbour);
+                    }
+                }
+            }
+        }
         private void OnValidate()
         {
+            if (ActiveGrid == null)
+            {
+                return;
+            }
             if (showCoordinates)
             {
                 
@@ -53,8 +128,19 @@ namespace HexagonPackage
         }
         private void Awake()
         {
-            hexagonSelector.Hexagon_Clicked += Hexagon_Clicked;
-            hexagonSelector.MouseHover_Changed += EditGrid_MouseEnter;
+            if (selectionController == null)
+            {
+                Debug.LogWarning("No SelectionController assigned");
+                return;
+            }
+            ActiveGrid.HexagonAdded += ActiveGrid_HexagonCreated;
+            ActiveGrid.HexagonRemoved += ActiveGrid_HexagonRemoved;
+            selectionController.Hexagon_Clicked += Hexagon_Clicked;
+            selectionController.MouseHover_Changed += EditGrid_MouseEnter;
+        }
+        private void Start()
+        {
+            CreateEditGrid();
         }
         private void Update()
         {
@@ -126,15 +212,11 @@ namespace HexagonPackage
             }
             else if (hex.HexGrid == ActiveGrid)
             {
-                Debug.Log("hi");
                 lastButton = btn;
                 if (btn == 1)
                 {
-                    Debug.Log("hi2");
                     if (ActiveGrid.Hexagons.Count > 1)
                     {
-                        Debug.Log("hi3");
-
                         ActiveGrid.RemoveHexagon(hex);
                     }
                 }

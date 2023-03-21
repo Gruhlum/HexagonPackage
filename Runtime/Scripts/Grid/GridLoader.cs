@@ -12,6 +12,7 @@ namespace HexagonPackage
 	{
         public HexGrid Grid;
         public SavedGrid GridToLoad;
+        public bool LoadOnAwake;
 
         void Start()
         {
@@ -21,7 +22,10 @@ namespace HexagonPackage
             }
             else
             {
-                LoadGrid();
+                if (LoadOnAwake)
+                {
+                    LoadGrid();
+                }              
             }
         }
 

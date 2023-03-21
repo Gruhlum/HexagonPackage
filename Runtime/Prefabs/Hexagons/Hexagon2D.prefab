@@ -344,7 +344,11 @@ MonoBehaviour:
   hexObject: {fileID: 0}
   hexComponents:
   - {fileID: 1625658136017561888}
-  data: {fileID: 0}
+  data:
+    radius: 1.5
+    spacingX: 0
+    spacingY: 0
+    flat: 0
 --- !u!114 &1625658136017561888
 MonoBehaviour:
   m_ObjectHideFlags: 0

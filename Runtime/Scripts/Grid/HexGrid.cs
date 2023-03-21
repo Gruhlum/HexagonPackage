@@ -14,9 +14,7 @@ namespace HexagonPackage
         private List<Hexagon> hexagonObjects = new List<Hexagon>();
 
         public event Action<Hexagon> HexagonAdded;
-        public event Action<Hexagon> HexagonRemoved;
-
-        public SavedGrid GridToLoad;
+        public event Action<Hexagon> HexagonRemoved;      
 
         public HexagonData HexagonData
         {
@@ -249,22 +247,7 @@ namespace HexagonPackage
                 }
             }
             return results;
-        }
-        [ContextMenu("Load Grid")]
-        public void LoadGrid()
-        {
-            if (GridToLoad == null)
-            {
-                Debug.LogWarning("GridToLoad is null!");
-                return;
-            }
-            GetChildrenHexagons();
-            RemoveAll(true);
-            foreach (var pos in GridToLoad.SavedHexagonPositions)
-            {
-                CreateHexagon(pos.cube).Type = pos.type;
-            }
-        }             
+        }            
 
         [ContextMenu("Recalculate")]
         private void RecalculatePositions()

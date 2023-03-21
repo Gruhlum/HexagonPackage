@@ -4,8 +4,8 @@ using UnityEngine;
 
 namespace HexagonPackage
 {
-    [CreateAssetMenu(menuName = "HexPackage/HexagonData")]
-    public class HexagonData : ScriptableObject
+    [System.Serializable]
+    public class HexagonData
     {
         private static readonly float SQRT_3 = 1.73205f;
         private static readonly float WIDTH_MULTIPLIER = 0.866025f; //Mathf.Sqrt(3) / 2;
