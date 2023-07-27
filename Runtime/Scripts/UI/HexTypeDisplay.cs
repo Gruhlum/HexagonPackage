@@ -30,7 +30,7 @@ namespace HexagonPackage
             HexType = hexType;
             HotKey = hotKey;
             this.hotKeyText.text = hotKey.DisplayText;
-            image.color = hexType.color;
+            image.color = hexType.Color;
             this.image.sprite = hexType.sprite;
             GetComponent<Button>().onClick.AddListener(delegate { manager.OnButtonClicked(this); });
         }

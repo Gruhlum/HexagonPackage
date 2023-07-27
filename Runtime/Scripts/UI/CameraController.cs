@@ -7,6 +7,7 @@ namespace HexagonPackage
 	public class CameraController : MonoBehaviour
 	{
         public int ScrollSpeed = 50;
+        public int MinDistance = 1;
         Camera mainCamera;
         private void Awake()
         {
@@ -18,7 +19,11 @@ namespace HexagonPackage
             {
                 if (mainCamera.orthographic)
                 {
-                    mainCamera.orthographicSize -= Input.mouseScrollDelta.y * ScrollSpeed;
+                    if (Input.mouseScrollDelta.y > 0 && mainCamera.orthographicSize <= MinDistance)
+                    {
+                        return;
+                    }
+                    else mainCamera.orthographicSize -= Input.mouseScrollDelta.y * ScrollSpeed;
                 }
                 else mainCamera.transform.position -= new Vector3(0, 0, Input.mouseScrollDelta.y * ScrollSpeed);
             }

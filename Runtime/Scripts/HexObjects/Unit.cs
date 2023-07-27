@@ -3,16 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace HexagonPackage
+namespace HexagonPackage.HexObjects
 {
 	public enum Team { Friendly, Enemy, Neutral }
 	public class Unit : HexObject
 	{
 		public Team Team;
-
-		public Resource Health;
-
-		public Resource Energy;
 
 		public List<Ability> Abilities = new List<Ability>();
 

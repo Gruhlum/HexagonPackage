@@ -28,6 +28,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1.05, y: 1.05, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -70,11 +71,11 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 5
+  m_SortingLayerID: -39695233
+  m_SortingLayer: 2
+  m_SortingOrder: 11
   m_Sprite: {fileID: 21300000, guid: a592cf6218fec6840b04e85fcdeb63bb, type: 3}
-  m_Color: {r: 0.3819359, g: 0.7264151, b: 0.3186632, a: 0.39215687}
+  m_Color: {r: 0.5839812, g: 0.90588236, b: 0.44705883, a: 0.6862745}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -96,4 +97,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4aedc64385e12614f94188fd89ea908e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sprite: {fileID: 21300000, guid: a592cf6218fec6840b04e85fcdeb63bb, type: 3}
+  sr: {fileID: 5486383194162562520}

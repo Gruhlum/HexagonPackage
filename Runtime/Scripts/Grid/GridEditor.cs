@@ -11,8 +11,8 @@ namespace HexagonPackage
     [RequireComponent(typeof(SelectionController))]
     public class GridEditor : MonoBehaviour
     {
-        public HexGrid ActiveGrid;
-        public HexGrid EditGrid;
+        public HexagonGrid ActiveGrid;
+        public HexagonGrid EditGrid;
 
         public HexagonType selectedType;
 
@@ -21,18 +21,20 @@ namespace HexagonPackage
 
         [SerializeField] private SelectionController selectionController = default;
 
-        public bool ShowCoordinates
+        public bool AllowRightClick
         {
             get
             {
-                return showCoordinates;
+                return allowRightClick;
             }
             set
             {
-                showCoordinates = value;
+                allowRightClick = value;
             }
         }
-        [SerializeField] private bool showCoordinates = default;
+        [SerializeField] private bool allowRightClick = true;
+
+
         private void Reset()
         {
             selectionController = GetComponent<SelectionController>();
@@ -104,28 +106,6 @@ namespace HexagonPackage
                 }
             }
         }
-        private void OnValidate()
-        {
-            if (ActiveGrid == null)
-            {
-                return;
-            }
-            if (showCoordinates)
-            {
-                
-                foreach (var hex in ActiveGrid.GetComponentsInChildren<Hexagon>(false))
-                {
-                    hex.GetHexComponent<DisplayText>().SetText(hex.Cube.X + "," + hex.Cube.Y);
-                }
-            }
-            else
-            {
-                foreach (var hex in ActiveGrid.GetComponentsInChildren<Hexagon>(false))
-                {
-                    hex.GetHexComponent<DisplayText>().SetText("");
-                }
-            }
-        }
         private void Awake()
         {
             if (selectionController == null)
@@ -155,16 +135,6 @@ namespace HexagonPackage
         {
             Hexagon hex = ActiveGrid.CreateHexagon(cube);
             hex.Type = selectedType;
-            
-            DisplayText text = hex.GetHexComponent<DisplayText>();
-            if (text != null)
-            {
-                if (ShowCoordinates)
-                {
-                    text.SetText(cube.X + ", " + cube.Y);
-                }
-                else text.SetText("");
-            }
         }
 
         private void EditGrid_MouseEnter(Hexagon hex)
@@ -201,12 +171,20 @@ namespace HexagonPackage
 
         private void Hexagon_Clicked(Hexagon hex, int btn)
         {
+            if (btn == 1 && allowRightClick == false)
+            {
+                return;
+            }
             if (hex.HexGrid == EditGrid)
             {
                 lastButton = btn;
                 if (btn == 0)
                 {
-                    BuildHexagon(hex.Cube);
+                    if (hex.HexObject == null)
+                    {
+                        BuildHexagon(hex.Cube);
+                    }
+                    
                 }
                 enableHoverClick = true;
             }
@@ -215,7 +193,7 @@ namespace HexagonPackage
                 lastButton = btn;
                 if (btn == 1)
                 {
-                    if (ActiveGrid.Hexagons.Count > 1)
+                    if (ActiveGrid.Hexagons.Count > 1 && hex.HexObject == null)
                     {
                         ActiveGrid.RemoveHexagon(hex);
                     }

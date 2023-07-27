@@ -8,7 +8,7 @@ namespace HexagonPackage
 {
 	public class GridBuilder : MonoBehaviour
 	{
-        public HexGrid ActiveGrid;
+        public HexagonGrid ActiveGrid;
 
         public int Rows;
         public int Columns;
@@ -16,7 +16,11 @@ namespace HexagonPackage
 
         public void ClearAll(bool destroy)
         {
-            ActiveGrid.RemoveAll(destroy);
+            if (ActiveGrid != null)
+            {
+                ActiveGrid.RemoveAll(destroy);
+            }
+            else Debug.LogError("Active Grid is Empty");
         }
         public void BuildGrid()
         {

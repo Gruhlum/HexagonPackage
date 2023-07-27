@@ -2,13 +2,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using UnityEngine;
+using UnityEngine.SocialPlatforms;
+using UnityEngine.UIElements;
 
 namespace HexagonPackage
 {
     [System.Serializable]
     public struct Cube
     {
+        private static readonly float SQRT_3 = 1.73205f;
+
         public int X;
         public int Y;
         public int Z;
@@ -19,6 +24,14 @@ namespace HexagonPackage
             { new Cube(1, -1), new Cube(1, 0), new Cube(0, 1),
             new Cube(-1, 1), new Cube(-1, 0), new Cube(0, -1)};
 
+
+        public static Cube Zero
+        {
+            get
+            {
+                return new Cube(0, 0);
+            }          
+        }
 
         public Cube(Cube cube)
         {
@@ -50,7 +63,25 @@ namespace HexagonPackage
             Y = y;
             Z = -(x + y);
         }
-
+        public Vector2 ToWorldPosition(float verticalSpacing, float horizontalSpacing, bool flat)
+        {
+            if (flat)
+            {
+                return new Vector2(verticalSpacing * X, horizontalSpacing * (Y + X / 2f));
+            }
+            else return new Vector2(horizontalSpacing * (X + Y / 2f), verticalSpacing * Y);
+        }
+        public static Cube WorldPositionToCube(float x, float y, float radius, bool flat)
+        {
+            if (flat)
+            {
+                return new Cube();
+            }
+            else
+            {
+                return new Cube((SQRT_3 / 3 * x - 1f / 3f * y) / radius, (2f / 3f * y) / radius);
+            }
+        }
         public Cube GetNeighbour(int direction)
         {
             return this + cubeDirections[direction];
@@ -73,7 +104,13 @@ namespace HexagonPackage
             }
             return false;
         }
-
+        public static Cube GetCenterCube(List<Cube> cubes)
+        {
+            float x = cubes.Select(c => c.X).Sum() / (float)cubes.Count;
+            float y = cubes.Select(c => c.Y).Sum() / (float)cubes.Count;
+            float z = cubes.Select(c => c.Z).Sum() / (float)cubes.Count;
+            return Round(x, y, z);
+        }
         public void Rotate(Cube center, int direction)
         {
             direction = WrapDirection(direction);
@@ -84,12 +121,178 @@ namespace HexagonPackage
             }
             this += center;
         }
-
-        public Path[][] GetPathingMap(List<Cube> positions, int range = 20)
+        public static Cube[] GetShortestPath(Cube start, Cube end, List<Cube> positions, int range = 50)
         {
             Path[][] cubePaths = new Path[range][];
-            cubePaths[0] = new Path[] { new Path(this, this) };
-            List<Cube> visited = new List<Cube>() { this };
+            cubePaths[0] = new Path[] { new Path(start, start) };
+            List<Cube> visited = new List<Cube>() { start };
+            for (int i = 1; i < range; i++)
+            {
+                List<Path> allowedNeighbours = new List<Path>();
+                foreach (var preCube in cubePaths[i - 1])
+                {
+                    List<Cube> neighbours = preCube.Cube.GetNeighbours();
+                    foreach (var neighbour in neighbours)
+                    {
+                        if (!visited.Contains(neighbour) && positions.Contains(neighbour))
+                        {
+                            allowedNeighbours.Add(new Path(neighbour, preCube.Cube));
+                            if (neighbour == end)
+                            {
+                                return GetPath(start, cubePaths);
+                            }
+                            visited.Add(neighbour);
+                        }
+                    }
+                }
+                cubePaths[i] = allowedNeighbours.ToArray();
+            }
+            return null;
+
+            //List<Cube> path = new List<Cube>();
+            //List<Cube> line = start.GetLine(end);
+            //int direction = start.GetDirection(end);
+            //List<Cube> checkedCubes = new List<Cube>();
+            //Cube lastCube = start;
+            //int count = 0;
+
+            //for (int i = 0; i < 5; i++)
+            //{
+            //    int[] directions = new int[5] { 0, 1, -1, 2, -2 };
+            //    Cube neigh = lastCube.GetNeighbour(direction + directions[i]);
+            //    if (positions.Contains(neigh))
+            //    {
+            //        path.Add(neigh);
+            //        lastCube = neigh;
+            //        break;
+            //    }
+            //}
+
+            //while (lastCube != end || count > 100)
+            //{
+            //    count++;
+
+            //    List<Cube> neighbours = lastCube.GetNeighbours();
+            //    List<Cube> freeNeighbours = new List<Cube>();
+            //    foreach (var neighbour in neighbours)
+            //    {
+            //        if (checkedCubes.Contains(neighbour) || positions.Contains(neighbour))
+            //        {
+            //            freeNeighbours.Add(neighbour);
+            //        }
+            //    }
+
+            //    checkedCubes.AddRange(neighbours);
+
+            //    foreach (var neighbour in freeNeighbours)
+            //    {
+            //        if (line.Contains(neighbour))
+            //        {
+            //            path.Add(neighbour);
+            //            lastCube = neighbour;
+            //            break;
+            //        }
+            //    }
+            //}
+            //return path;
+        }
+        public static Cube[] GetPath(Cube start, Cube end, List<Cube> positions, int range = 20)
+        {
+            return GetPath(end, GetPathingMap(start, positions, range));
+        }
+        public static Cube[] GetPath(Cube start, Path[][] path)
+        {
+            if (start == null)
+            {
+                return null;
+            }
+            Cube[] cubePath;
+            for (int i = 0; i < path.Length; i++)
+            {
+                if (Array.Exists(path[i], x => x.Cube == start))
+                {
+                    Path targetPath = Array.Find(path[i], x => x.Cube == start);
+                    cubePath = new Cube[i + 1];
+                    cubePath[i] = targetPath.Cube;
+                    //Debug.Log(i);
+                    int distance = i - 1;
+                    while (distance > 0)
+                    {
+                        // To alternate between left and right
+                        //Debug.Log("hi");
+                        //Array.Reverse(path[distance]);
+                        //if (distance % 2 != 0)
+                        //{
+                        //    Debug.Log("hi");
+                        //    Array.Reverse(path[distance]);
+                        //}
+                        targetPath = Array.Find(path[distance], x => x.Cube == targetPath.CameFrom);
+                        cubePath[distance] = targetPath.Cube;
+                        distance--;
+                    }
+
+                    cubePath[0] = path[0][0].Cube;
+
+                    return cubePath;
+                }
+            }
+            return null;
+        }
+        public static bool IsPathAvailable(Cube start, Cube end, List<Cube> positions)
+        {
+            Path[][] cubePaths = new Path[100][];
+            cubePaths[0] = new Path[] { new Path(start, start) };
+            List<Cube> visited = new List<Cube>() { start };
+            for (int i = 1; i < 100; i++)
+            {
+                List<Path> allowedNeighbours = new List<Path>();
+                foreach (var preCube in cubePaths[i - 1])
+                {
+                    List<Cube> neighbours = preCube.Cube.GetNeighbours();
+                    foreach (var neighbour in neighbours)
+                    {
+                        if (!visited.Contains(neighbour) && positions.Contains(neighbour))
+                        {
+                            if (neighbour == end)
+                            {
+                                return true;
+                            }
+                            allowedNeighbours.Add(new Path(neighbour, preCube.Cube));
+                            visited.Add(neighbour);
+                        }
+                    }
+                }
+                cubePaths[i] = allowedNeighbours.ToArray();
+            }
+            return false;
+        }
+        public static Cube? GetNextTile(Cube current, Path[][] PathingMap)
+        {
+            if (current == null)
+            {
+                return null;
+            }
+            for (int i = 0; i < PathingMap.Length; i++)
+            {
+                if (!Array.Exists(PathingMap[i], x => x.Cube == current))
+                {
+                    continue;
+                }
+                if (i == 0)
+                {
+                    return null;
+                }
+
+                Path path = Array.Find(PathingMap[i], x => x.Cube == current);
+                return path.CameFrom;
+            }
+            return null;
+        }
+        public static Path[][] GetPathingMap(Cube start, List<Cube> positions, int range = 20)
+        {
+            Path[][] cubePaths = new Path[range][];
+            cubePaths[0] = new Path[] { new Path(start, start) };
+            List<Cube> visited = new List<Cube>() { start };
             for (int i = 1; i < range; i++)
             {
                 List<Path> allowedNeighbours = new List<Path>();
@@ -108,32 +311,6 @@ namespace HexagonPackage
                 cubePaths[i] = allowedNeighbours.ToArray();
             }
             return cubePaths;
-        }
-        public Cube[] GetPath(Cube target, Path[][] path)
-        {
-            if (target == null)
-            {
-                return null;
-            }
-            Cube[] cubePath;
-            for (int i = 0; i < path.Length; i++)
-            {
-                if (Array.Exists(path[i], x => x.Cube == target))
-                {
-                    Path targetPath = Array.Find(path[i], x => x.Cube == target);
-                    cubePath = new Cube[i + 1];
-                    cubePath[i] = targetPath.Cube;
-                    int distance = i - 1;
-                    while (distance > 0)
-                    {
-                        targetPath = Array.Find(path[distance], x => x.Cube == targetPath.CameFrom);
-                        distance--;
-                        cubePath[distance] = targetPath.Cube;
-                    }
-                    return cubePath;
-                }
-            }
-            return null;
         }
 
         public List<Cube> GetLine(Cube cube)
@@ -158,7 +335,7 @@ namespace HexagonPackage
         public List<Cube> GetRing(int radius)
         {
             List<Cube> results = new List<Cube>();
-            Cube cube = this + cubeDirections[2] * radius;
+            Cube cube = this + cubeDirections[4] * radius;
 
             for (int i = 0; i < 6; i++)
             {
@@ -174,6 +351,7 @@ namespace HexagonPackage
         public int GetNeighbourDirection(Cube target)
         {
             Cube c = target - this;
+            //Debug.Log(c + " - " + target);
             //Debug.Log(target.ToString() + " - " + this.ToString() + " - " + c.ToString());
             if (cubeDirections.Any(x => x == c))
             {

@@ -14,7 +14,7 @@ namespace HexagonPackage
         [TextArea]
         public string folderLocation = "Assets/HexagonPackage/Scripts/SavedGrids/Grids";
         public new string name;
-        public HexGrid hexagonGrid;
+        public HexagonGrid hexagonGrid;
 
         public bool OverrideSave
         {
@@ -29,7 +29,7 @@ namespace HexagonPackage
         }
         private bool overrideSave;
 
-        private HexGrid oldGrid;
+        private HexagonGrid oldGrid;
 
         private void Awake()
         {
@@ -65,7 +65,12 @@ namespace HexagonPackage
             }
             return true;
         }
-
+        public SavedGrid GenerateSavedGrid(List<Hexagon> hexagons)
+        {
+            SavedGrid savedGrid = ScriptableObject.CreateInstance<SavedGrid>();
+            savedGrid.SaveGridData(hexagons);
+            return savedGrid;
+        }
         public void SavePositions(string name, bool forceSave = false)
         {
             if (!AssetDatabase.IsValidFolder(folderLocation))
@@ -85,9 +90,7 @@ namespace HexagonPackage
             }
             overrideSave = false;
 
-            SavedGrid savedGrid = ScriptableObject.CreateInstance<SavedGrid>();
-            savedGrid.SaveGridData(hexagonGrid.Hexagons.Values.ToList());
-            
+            SavedGrid savedGrid = GenerateSavedGrid(hexagonGrid.Hexagons.Values.ToList());         
             
             AssetDatabase.CreateAsset(savedGrid, folderLocation + "/" + name + ".asset");
             Debug.Log("Save Successful");

@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Exile
+namespace HexagonPackage.HexObjects
 {
 	public class AreaAbility : Ability
 	{
@@ -22,7 +22,7 @@ namespace Exile
         }
         [SerializeField] private int range = default;
 
-        public override List<Hexagon> AquireTarget(Unit unit, HexGrid grid)
+        public override List<Hexagon> AquireTarget(Unit unit, HexagonGrid grid)
         {
             throw new System.NotImplementedException();
         }

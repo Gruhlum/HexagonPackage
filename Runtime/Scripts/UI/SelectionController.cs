@@ -3,21 +3,21 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Collections;
+using UnityEditor;
 using UnityEngine;
 
 namespace HexagonPackage
 {
     public class SelectionController : MonoBehaviour
     {
-        public List<HexGrid> ActiveGrids = new List<HexGrid>();
+        public List<HexagonGrid> ActiveGrids = new List<HexagonGrid>();
 
         [SerializeField] private Camera mainCam = default;
 
-        [SerializeField] private Spawner<HexHighlighter> highlightSpawner = default;
-
         public event Action<Hexagon> MouseHover_Changed;
         public event Action<Hexagon, int> Hexagon_Clicked;
-
+        [SerializeField] private Spawner<HexHighlighter> highlightSpawner;
+        private HexHighlighter lastHighlight;
         public Vector2 MousePosition
         {
             get
@@ -44,15 +44,23 @@ namespace HexagonPackage
                     return;
                 }
                 hoverHexagon = value;
-                highlightSpawner.DeactivateAll();
+                if (lastHighlight != null)
+                {
+                    lastHighlight.Disable(0.1f);
+                    lastHighlight = null;
+                }
+                
                 if (hoverHexagon != null)
                 {
-                    highlightSpawner.Spawn().Setup(hoverHexagon);
+                    lastHighlight = highlightSpawner.Spawn();
+                    lastHighlight.SetPosition(HoverHexagon);
                 }               
                 MouseHover_Changed?.Invoke(hoverHexagon);
             }
         }
         private Hexagon hoverHexagon = default;
+
+        public bool Lock;
 
         private void Reset()
         {
@@ -62,17 +70,21 @@ namespace HexagonPackage
 
         private void Update()
         {
+            if (Lock)
+            {
+                return;
+            }
             mousePos = mainCam.ScreenToWorldPoint(Input.mousePosition);
             Hexagon hex = null;
             foreach (var grid in ActiveGrids)
             {
-                hex = grid.WorldPointToHexagon(mousePos);
-                HoverHexagon = hex;
+                hex = grid.WorldPointToHexagon(mousePos);                
                 if (hex != null)
                 {
                     break;
                 }
             }
+            HoverHexagon = hex;
 
             if (HoverHexagon == null)
             {

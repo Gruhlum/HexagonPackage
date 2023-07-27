@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Exile
+namespace HexagonPackage.HexObjects
 {
     public class LineAbility : Ability
     {
@@ -34,7 +34,7 @@ namespace Exile
         [SerializeField] private int pierce = 1;
 
 
-        public override List<Hexagon> AquireTarget(Unit unit, HexGrid grid)
+        public override List<Hexagon> AquireTarget(Unit unit, HexagonGrid grid)
         {
             List<Hexagon> targets = new List<Hexagon>();
             Hexagon initialTarget = GetInitialTarget(unit, grid);
@@ -43,11 +43,11 @@ namespace Exile
             int direction = unit.Hexagon.Cube.GetDirection(initialTarget.Cube);
 
             List<Cube> cubes = unit.Hexagon.Cube.GetLine(initialTarget.Cube + Cube.GetCubeFromDirection(direction) * Pierce);
-            targets.AddRange(grid.GetHexagons(cubes));
+            targets.AddRange(grid.GetHexagons(cubes, true));
             return targets;
         }
 
-        private Hexagon GetInitialTarget(Unit unit, HexGrid grid)
+        private Hexagon GetInitialTarget(Unit unit, HexagonGrid grid)
         {
             List<Hexagon> targets = GetMeleeTargets(unit, grid);
             if (targets.Count != 0)
@@ -60,7 +60,7 @@ namespace Exile
             {
                 currentRange++;
                 List<Cube> results = unit.Hexagon.Cube.GetRing(currentRange);
-                List<Hexagon> hexes = grid.GetHexagons(results);
+                List<Hexagon> hexes = grid.GetHexagons(results, true);
 
                 foreach (var hex in hexes)
                 {

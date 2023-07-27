@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Exile
+namespace HexagonPackage.HexObjects
 {
 	public abstract class Ability : MonoBehaviour
 	{
@@ -48,12 +48,12 @@ namespace Exile
             return false;
         }
 
-        public abstract List<Hexagon> AquireTarget(Unit unit, HexGrid grid);
+        public abstract List<Hexagon> AquireTarget(Unit unit, HexagonGrid grid);
 
-        protected List<Hexagon> GetMeleeTargets(Unit unit, HexGrid grid)
+        protected List<Hexagon> GetMeleeTargets(Unit unit, HexagonGrid grid)
         {
             List<Cube> neighbours = unit.Hexagon.Cube.GetNeighbours();
-            return grid.GetHexagons(neighbours);
+            return grid.GetHexagons(neighbours, true);
         }
     }
 }

@@ -1,32 +1,26 @@
-﻿using System.Collections;
+﻿using HexTecGames.Basics;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace HexagonPackage
 {
     public class HexTypeManager : MonoBehaviour
     {
-        public GameObject HexTypePrefab;
         public GridEditor GridEditor;
         [SerializeField] private List<HexagonType> hexTypes = default;
 
         public List<HotKey> HotKeys;
+        [SerializeField] private Spawner<HexTypeDisplay> displaySpawner = default;
 
-        private List<HexTypeDisplay> displays = new List<HexTypeDisplay>();
-        private void Awake()
-        {
-            CreateDisplays();
-            if (displays.Count != 0)
-            {
-                OnButtonClicked(displays[0]);
-            }
-        }
         private void Update()
         {
             foreach (var hotKey in HotKeys)
             {
                 if (Input.GetKeyDown(hotKey.KeyCode))
                 {
+                    List<HexTypeDisplay> displays = GetComponentsInChildren<HexTypeDisplay>().ToList();
                     HexTypeDisplay display = displays.Find(x => x.HotKey.KeyCode == hotKey.KeyCode);
                     if (display != null)
                     {
@@ -56,21 +50,14 @@ namespace HexagonPackage
                 HotKeys.Add(hotkey);
             }
         }
+        [ContextMenu("Create Displays")]
         public void CreateDisplays()
         {
-            if (displays.Count != 0)
-            {
-                for (int i = displays.Count - 1; i >= 0; i--)
-                {
-                    Destroy(displays[i].gameObject);
-                }
-            }
+            displaySpawner.TryDestroyAll();
             for (int i = 0; i < hexTypes.Count; i++)
             {
-                GameObject hexTypeGO = Instantiate(HexTypePrefab, transform);
-                HexTypeDisplay hexTypeDisplay = hexTypeGO.GetComponent<HexTypeDisplay>();
+                HexTypeDisplay hexTypeDisplay = displaySpawner.Spawn();
                 hexTypeDisplay.Setup(hexTypes[i], this, GetHotKey(i));
-                displays.Add(hexTypeDisplay);
             }
         }
         private HotKey GetHotKey(int index)
@@ -84,7 +71,7 @@ namespace HexagonPackage
 
         public void OnButtonClicked(HexTypeDisplay selectedDisplay)
         {
-            foreach (var display in displays)
+            foreach (var display in displaySpawner.GetActiveBehaviours())
             {
                 display.ToggleColor(selectedDisplay == display);
             }

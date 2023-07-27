@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using UnityEngine;
-using UnityEngine.Events;
-using UnityEngine.EventSystems;
-using UnityEngine.UI;
-using HexagonPackage.HexagonComponents;
-using Exile;
+using HexagonPackage.HexObjects;
+using System.Xml.Linq;
 
 namespace HexagonPackage
 {
@@ -28,6 +22,7 @@ namespace HexagonPackage
                 {
                     type.Apply(this);
                 }
+                else SpriteRenderer.color = Color.white;
             }
         }
         [SerializeField] private HexagonType type = default;
@@ -68,8 +63,7 @@ namespace HexagonPackage
         }
         [SerializeField] private HexObject hexObject = default;
 
-
-        [SerializeField] private List<HexComponent> hexComponents = new List<HexComponent>();
+        private List<MonoBehaviour> otherObjects = new List<MonoBehaviour>();
 
         public HexagonData Data
         {
@@ -84,7 +78,7 @@ namespace HexagonPackage
         }
         [SerializeField] private HexagonData data = default;
 
-        public HexGrid HexGrid
+        public HexagonGrid HexGrid
         {
             get
             {
@@ -95,53 +89,103 @@ namespace HexagonPackage
                 hexGrid = value;
             }
         }
-        private HexGrid hexGrid;
+        [SerializeField] private HexagonGrid hexGrid;
+
+        public string Text
+        {
+            get
+            {
+                if (hexText == null)
+                {
+                    return null;
+                }
+                return hexText.Text;
+            }
+        }
+        private HexagonText hexText;      
+
+        public bool IsBlocked
+        {
+            get
+            {
+                return (HexObject != null);
+            }         
+        }
 
         private void OnValidate()
         {
-            List<HexComponent> components = new List<HexComponent>();
-            foreach (var component in hexComponents)
-            {
-                if (component != null)
-                {
-                    components.Add(component);
-                }
-            }
-            hexComponents.Clear();
-            hexComponents.AddRange(components);
             if (Type != null)
             {
                 Type.Apply(this);
             }
         }
-
-        public void AddHexComponent(HexComponent component)
+        private void OnDisable()
         {
-            hexComponents.Add(component);
-        }
-        public void RemoveComponent(HexComponent component)
-        {
-            hexComponents.Remove(component);
-        }
-        public bool ContainsHexComponent<T>() where T : HexComponent
-        {
-            if (hexComponents.Any(x => x is T))
+            if (hexText != null)
             {
-                return true;
+                hexText.Disable();
+                hexText = null;
             }
-            else return false;
-        }
-        public T GetHexComponent<T>() where T : HexComponent
-        {
-            return hexComponents.Find(x => x is T) as T;
         }
 
-        public virtual void Setup(Cube cube, HexagonData data, HexGrid grid)
+        public void AddOtherObject(MonoBehaviour m)
+        {
+            otherObjects.Add(m);
+            //Debug.Log("Add " + otherObjects.Count);
+        }
+        public void RemoveOtherObject(MonoBehaviour m)
+        {
+            otherObjects.Remove(m);
+            //Debug.Log("Remove " + otherObjects.Count);
+        }
+        public List<T> GetOtherObjects<T>() where T : MonoBehaviour
+        {
+            List<T> results = new List<T>();
+            foreach (var m in otherObjects)
+            {
+                if (m is T t)
+                {
+                    results.Add(t);
+                }
+            }
+            //Debug.Log("R: " + results.Count + " . " + otherObjects.Count);
+            return results;
+        }
+        public void DisableText()
+        {
+            if (hexText != null)
+            {
+                hexText.Disable();
+            }
+            hexText = null;
+        }
+        public void SetText(string text)
+        {
+            if (HexGrid == null)
+            {
+                return;
+            }
+            if (string.IsNullOrEmpty(text))
+            {
+                DisableText();
+                return;
+            }
+            if (hexText == null)
+            {
+                hexText = HexGrid.GenerateHexText();
+            }
+            hexText.Setup(transform, text);
+        }
+        public void SetColor(Color col)
+        {
+            SpriteRenderer.color = col;
+        }
+        public virtual void Setup(Cube cube, HexagonData data, HexagonGrid grid)
         {
             this.Data = data;
             HexGrid = grid;
             Cube = cube;
-            transform.localPosition = Data.ToWorldPosition(cube.X, cube.Y);
+            transform.localPosition = cube.ToWorldPosition(Data.VerticalSpacing, Data.HorizontalSpacing, Data.Flat);
             name = "Hex (" + Cube.X + ", " + Cube.Y + ")";
             if (!grid.Hexagons.ContainsKey(Cube))
             {

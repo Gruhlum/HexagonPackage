@@ -10,7 +10,7 @@ namespace HexagonPackage
     [ExecuteAlways]
     public class GridLoader : MonoBehaviour
 	{
-        public HexGrid Grid;
+        public HexagonGrid Grid;
         public SavedGrid GridToLoad;
         public bool LoadOnAwake;
 
@@ -36,7 +36,7 @@ namespace HexagonPackage
                 Debug.LogError("Target grid is null");
                 return;
             }
-            Grid.GetChildrenHexagons();
+            //Grid.GetChildrenHexagons();
             Grid.RemoveAll(true);
             foreach (var pos in GridToLoad.SavedHexagonPositions)
             {
