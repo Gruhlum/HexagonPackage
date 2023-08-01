@@ -2,10 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 using UnityEngine;
-using UnityEngine.SocialPlatforms;
-using UnityEngine.UIElements;
 
 namespace HexagonPackage
 {
@@ -20,7 +17,7 @@ namespace HexagonPackage
 
         //public Cube cameFrom;
         // Starts btm-right, goes counter-clockwise
-        public static readonly List<Cube> cubeDirections = new List<Cube>
+        public static readonly List<Cube> CubeDirections = new List<Cube>
             { new Cube(1, -1), new Cube(1, 0), new Cube(0, 1),
             new Cube(-1, 1), new Cube(-1, 0), new Cube(0, -1)};
 
@@ -30,7 +27,7 @@ namespace HexagonPackage
             get
             {
                 return new Cube(0, 0);
-            }          
+            }
         }
 
         public Cube(Cube cube)
@@ -84,12 +81,12 @@ namespace HexagonPackage
         }
         public Cube GetNeighbour(int direction)
         {
-            return this + cubeDirections[direction];
+            return this + CubeDirections[WrapDirection(direction)];
         }
         public List<Cube> GetNeighbours()
         {
             List<Cube> Results = new List<Cube>();
-            foreach (var direction in cubeDirections)
+            foreach (var direction in CubeDirections)
             {
                 Cube cube = this + direction;
                 Results.Add(cube);
@@ -313,6 +310,23 @@ namespace HexagonPackage
             return cubePaths;
         }
 
+        public static Cube GetClosestCube(Cube center, List<Cube> cubes, int maxDistance = 20)
+        {
+            if (cubes.Count <= 1)
+            {
+                return center;
+            }
+            for (int i = 0; i < maxDistance; i++)
+            {
+                List<Cube> results = center.GetRing(i);
+                if (results.Count != 0)
+                {
+                    return results[0];
+                }
+            }
+            return center;
+        }
+
         public List<Cube> GetLine(Cube cube)
         {
             List<Cube> pathCubes = new List<Cube>();
@@ -335,7 +349,7 @@ namespace HexagonPackage
         public List<Cube> GetRing(int radius)
         {
             List<Cube> results = new List<Cube>();
-            Cube cube = this + cubeDirections[4] * radius;
+            Cube cube = this + CubeDirections[4] * radius;
 
             for (int i = 0; i < 6; i++)
             {
@@ -353,9 +367,9 @@ namespace HexagonPackage
             Cube c = target - this;
             //Debug.Log(c + " - " + target);
             //Debug.Log(target.ToString() + " - " + this.ToString() + " - " + c.ToString());
-            if (cubeDirections.Any(x => x == c))
+            if (CubeDirections.Any(x => x == c))
             {
-                return cubeDirections.IndexOf(c);
+                return CubeDirections.IndexOf(c);
             }
             else return -1;
         }
@@ -376,9 +390,17 @@ namespace HexagonPackage
             }
 
             Cube firstCube = path.ElementAt(1) - this;
-            return cubeDirections.IndexOf(firstCube);
+            return CubeDirections.IndexOf(firstCube);
         }
-
+        public int GetDirection(float x, float y)
+        {
+            float angle = Mathf.Atan2(y, x) * Mathf.Rad2Deg - 180f;
+            angle = Mathf.Abs(angle);
+            int direction = 4 - Mathf.RoundToInt(angle / 60f);
+            direction = WrapDirection(direction);
+            //Debug.Log(angle + " - " + direction);
+            return direction;
+        }
         public int GetDistance(Cube cube)
         {
             return (Mathf.Abs(X - cube.X) + Mathf.Abs(Y - cube.Y) + Mathf.Abs(Z - cube.Z)) / 2;
@@ -436,7 +458,7 @@ namespace HexagonPackage
             {
                 direction -= 6;
             }
-            return cubeDirections[direction];
+            return CubeDirections[direction];
         }
         public static int WrapDirection(int value)
         {

@@ -14,7 +14,19 @@ namespace HexagonPackage
         public HexagonGrid ActiveGrid;
         public HexagonGrid EditGrid;
 
-        public HexagonType selectedType;
+        public HexagonType SelectedType
+        {
+            get
+            {
+                return selectedType;
+            }
+            set
+            {
+                selectedType = value;
+            }
+        }
+        [SerializeField] private HexagonType selectedType = default;
+
 
         private bool enableHoverClick = false;
         int lastButton;
@@ -134,7 +146,7 @@ namespace HexagonPackage
         private void BuildHexagon(Cube cube)
         {
             Hexagon hex = ActiveGrid.CreateHexagon(cube);
-            hex.Type = selectedType;
+            hex.Type = SelectedType;
         }
 
         private void EditGrid_MouseEnter(Hexagon hex)
@@ -163,14 +175,14 @@ namespace HexagonPackage
                     }
                     else if (lastButton == 0)
                     {
-                        hex.Type = selectedType;
+                        hex.Type = SelectedType;
                     }
                 }
             }       
         }
 
         private void Hexagon_Clicked(Hexagon hex, int btn)
-        {
+        {           
             if (btn == 1 && allowRightClick == false)
             {
                 return;
@@ -200,7 +212,7 @@ namespace HexagonPackage
                 }
                 else if (btn == 0)
                 {
-                    hex.Type = selectedType;
+                    hex.Type = SelectedType;
                 }
                 enableHoverClick = true;
             }

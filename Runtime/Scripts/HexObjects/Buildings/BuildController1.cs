@@ -94,11 +94,11 @@ namespace HexagonPackage.HexObjects.UI
                 HoverHex = grid.WorldPointToHexagon(mouseWorldPos);
                 if (HoverHex == null)
                 {
-                    ghost.UpdatePosition(mouseWorldPos);
+                    ghost.SetPosition(mouseWorldPos);
                 }
                 else
                 {
-                    ghost.UpdatePosition(HoverHex.transform.position);
+                    ghost.SetPosition(HoverHex.transform.position);
                 }
             }
             if (Input.mouseScrollDelta.y > 0f)

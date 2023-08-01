@@ -32,22 +32,38 @@ namespace HexagonPackage
         }
         public void FadeOut(float time)
         {
+            if (!gameObject.activeInHierarchy)
+            {
+                return;
+            }
             StartCoroutine(StartFadeOut(time));
         }
-        public void Setup(Hexagon hex, Color col, float fadeIn = 0)
+        public void Setup(Hexagon hex, float fadeIn = 0)
         {
             Hexagon = hex;
             SetPosition(hex);
-            sr.color = col;
-            if (fadeIn > 0)
+            if (fadeIn > 0 && gameObject.activeInHierarchy)
             {
                 StartCoroutine(StartFadeIn(fadeIn));
             }
         }
-        public void Setup(Vector3 pos, Color col)
+        public void Setup(Hexagon hex, Color col, float fadeIn = 0)
+        {
+            sr.color = col;
+            Setup(hex, fadeIn);
+        }
+        public void Setup(Vector3 pos, Color col, float fadeIn = 0)
+        {
+            sr.color = col;
+            Setup(pos, fadeIn);
+        }
+        public void Setup(Vector3 pos, float fadeIn = 0)
         {
             SetPosition(pos);
-            sr.color = col;
+            if (fadeIn > 0)
+            {
+                StartCoroutine(StartFadeIn(fadeIn));
+            }
         }
         public void SetPosition(Hexagon hex)
         {
@@ -69,13 +85,17 @@ namespace HexagonPackage
             }
             else gameObject.SetActive(false);
         }
-        public void ChangeColor(Color col, float fadeIn = 0)
+        public void SetColor(Color col, float fadeIn = 0)
         {
             if (fadeIn >= 0)
             {
                 StartCoroutine(StartColorChange(fadeIn, col));
             }
             sr.color = col;
+        }
+        public void SetSortingOrder(int order)
+        {
+            sr.sortingOrder = order;
         }
         private IEnumerator StartFlash(float fadeIn, float holdTimer, float fadeOut)
         {

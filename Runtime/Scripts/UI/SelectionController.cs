@@ -31,6 +31,8 @@ namespace HexagonPackage
         }
         private Vector2 mousePos;
 
+        public bool showMouseHover = true;
+
         public Hexagon HoverHexagon
         {
             get
@@ -60,7 +62,7 @@ namespace HexagonPackage
         }
         private Hexagon hoverHexagon = default;
 
-        public bool Lock;
+        public bool DisableClickEvents;
 
         private void Reset()
         {
@@ -69,11 +71,7 @@ namespace HexagonPackage
 
 
         private void Update()
-        {
-            if (Lock)
-            {
-                return;
-            }
+        {          
             mousePos = mainCam.ScreenToWorldPoint(Input.mousePosition);
             Hexagon hex = null;
             foreach (var grid in ActiveGrids)
@@ -87,6 +85,11 @@ namespace HexagonPackage
             HoverHexagon = hex;
 
             if (HoverHexagon == null)
+            {
+                return;
+            }
+
+            if (DisableClickEvents)
             {
                 return;
             }

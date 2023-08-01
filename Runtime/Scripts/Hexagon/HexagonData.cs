@@ -83,5 +83,10 @@ namespace HexagonPackage
             }
         }
         [SerializeField] private bool flat = default;
+
+        public Cube WorldPositionToCube()
+        {
+            return Cube.WorldPositionToCube(VerticalSpacing, HorizontalSpacing, Radius, Flat);
+        }
     }
 }

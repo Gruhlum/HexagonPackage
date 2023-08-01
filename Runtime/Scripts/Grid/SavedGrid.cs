@@ -14,7 +14,7 @@ namespace HexagonPackage
             SavedHexagonPositions.Clear();
             foreach (var hex in hexagons)
             {
-                SavedHexagonPositions.Add(new SavePosition(hex.Cube, hex.Type));
+                SavedHexagonPositions.Add(new SavePosition(hex.Cube, hex.IsBlocked? null : hex.Type));
             }
         }
         public void MoveAllTiles(int x, int y)

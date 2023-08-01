@@ -34,6 +34,20 @@ namespace HexagonPackage.HexObjects.UI
         }
         [SerializeField] private int rotation = default;
 
+        public Hexagon Position
+        {
+            get
+            {
+                return position;
+            }
+            private set
+            {
+                position = value;
+            }
+        }
+        [SerializeField] private Hexagon position = default;
+
+
         public void SetSprite(Sprite sprite)
         {
             Sprite = sprite;
@@ -56,8 +70,12 @@ namespace HexagonPackage.HexObjects.UI
         {
             transform.position = GetMousePosition();
         }
-
-        public void UpdatePosition(Vector3 pos)
+        public void SetPosition(Hexagon hex)
+        {
+            Position = hex;
+            SetPosition(hex.transform.position);
+        }
+        public void SetPosition(Vector3 pos)
         {
             transform.position = pos;
         }
@@ -68,7 +86,7 @@ namespace HexagonPackage.HexObjects.UI
         public void Rotate(bool clockwise)
         {
             transform.eulerAngles = new Vector3(0, 0, transform.eulerAngles.z - 60);
-            Rotation -= 1;
+            Rotation -= clockwise? 1 : -1;
         }
 	}
 }

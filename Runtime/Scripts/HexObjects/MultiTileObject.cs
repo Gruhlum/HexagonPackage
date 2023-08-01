@@ -1,5 +1,6 @@
 using HexagonPackage.HexagonComponents;
 using HexagonPackage.HexObjects.UI;
+using HexTecGames.Basics;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -14,6 +15,8 @@ namespace HexagonPackage.HexObjects
     {
         public List<Cube> Size = new List<Cube>();
         private List<Hexagon> occupyingHexes;
+
+        
         public override void Setup(Cube center, HexagonGrid grid, int rotation, bool block = true)
         {
             Center = center;
@@ -31,6 +34,7 @@ namespace HexagonPackage.HexObjects
                 }
             }
         }
+        
         protected override void ClearHexagon()
         {
             if (occupyingHexes == null)
@@ -58,16 +62,15 @@ namespace HexagonPackage.HexObjects
             }
             return relativeCubes;
         }
-        public override bool IsValidPosition(Cube center, HexagonGrid grid, int rotation)
+        public override bool IsValidPosition(Cube center, HexagonGrid grid, int rotation, bool checkForBuildings = true)
         {
-            Hexagon hex = grid.GetHexagon(center);
             foreach (var position in Size)
             {
                 Cube cubeOffset = position + center;
                 cubeOffset.Rotate(center, rotation);
                 //Debug.Log(cube.ToString());
                 grid.Hexagons.TryGetValue(cubeOffset, out Hexagon targetHex);
-                if (targetHex == null || targetHex.HexObject != null)
+                if (targetHex == null || (checkForBuildings && targetHex.HexObject != null))
                 {
                     return false;
                 }

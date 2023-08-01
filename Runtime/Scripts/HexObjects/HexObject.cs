@@ -1,3 +1,4 @@
+using HexTecGames.Basics;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -50,7 +51,7 @@ namespace HexagonPackage.HexObjects
         [SerializeField] private Cube center = default;
 
 
-        public HexObject Prefab
+        public HexObject Origin
         {
             get
             {
@@ -75,7 +76,7 @@ namespace HexagonPackage.HexObjects
             }
         }
         private int rotation;
-
+       
 
         protected virtual void Awake()
         {
@@ -120,10 +121,10 @@ namespace HexagonPackage.HexObjects
             transform.eulerAngles = new Vector3(0, 0, 60 * value);
             Rotation = value;
         }
-        public virtual bool IsValidPosition(Cube cube, HexagonGrid grid, int rotation = 0)
+        public virtual bool IsValidPosition(Cube cube, HexagonGrid grid, int rotation = 0, bool checkForBuildings = true)
         {
             Hexagon hex = grid.GetHexagon(cube);
-            if (hex == null || hex.HexObject != null)
+            if (hex == null || (checkForBuildings && hex.HexObject != null))
             {
                 return false;
             }

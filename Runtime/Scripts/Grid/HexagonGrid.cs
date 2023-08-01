@@ -18,6 +18,8 @@ namespace HexagonPackage
 
         public event Action<Hexagon> HexagonAdded;
         public event Action<Hexagon> HexagonRemoved;
+        public event Action GridLoaded;
+        public event Action GridRemoved;
 
         public HexagonData HexagonData
         {
@@ -34,7 +36,6 @@ namespace HexagonPackage
 
         [SerializeField] private Spawner<HexagonText> textSpawner = default;
 
-        public event Action GridLoaded;
 
         [SerializeField] private bool showCoordinates;
 
@@ -134,6 +135,7 @@ namespace HexagonPackage
             else hexagonSpawner.DeactivateAll();
 
             Hexagons.Clear();
+            GridRemoved?.Invoke();
         }
         public void RemoveHexagon(Cube cube)
         {
@@ -254,9 +256,23 @@ namespace HexagonPackage
                 {
                     hex.SetText(string.Empty);
                 }
+                if (Application.isPlaying == false)
+                {
+                    textSpawner.TryDestroyAll();
+                }
             }
         }
-
+        public bool ContainsAny(List<Cube> cubes)
+        {
+            foreach (var cube in cubes)
+            {
+                if (Hexagons.ContainsKey(cube))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
         public bool Contains(Cube cube)
         {
             if (Hexagons.ContainsKey(cube))
@@ -282,7 +298,7 @@ namespace HexagonPackage
             Hexagons.TryGetValue(cube, out Hexagon hex);
             return hex;
         }
-        public List<Cube> GetCubes(bool unblockedOnly)
+        public List<Cube> GetCubes(bool unblockedOnly = false)
         {
             List<Cube> cubes = new List<Cube>();
             foreach (var hex in Hexagons.Values)
@@ -295,7 +311,7 @@ namespace HexagonPackage
             }
             return cubes;
         }
-        public List<Hexagon> GetHexagons(bool unblockedOnly)
+        public List<Hexagon> GetHexagons(bool unblockedOnly = false)
         {
             List<Hexagon> results = new List<Hexagon>();
             if (unblockedOnly == false)
@@ -314,7 +330,7 @@ namespace HexagonPackage
             }           
             return results;
         }
-        public List<Hexagon> GetHexagons(List<Cube> cubes, bool unblockedOnly)
+        public List<Hexagon> GetHexagons(List<Cube> cubes, bool unblockedOnly = false)
         {
             if (cubes == null)
             {
@@ -331,7 +347,7 @@ namespace HexagonPackage
             }
             return results;
         }
-        public List<Hexagon> GetHexagons(HexagonType type, bool unblockedOnly)
+        public List<Hexagon> GetHexagons(HexagonType type, bool unblockedOnly = false)
         {
             List<Hexagon> results = new List<Hexagon>();
             foreach (var hex in Hexagons.Values)
