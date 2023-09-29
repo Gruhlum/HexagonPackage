@@ -9,7 +9,7 @@ namespace HexagonPackage
     [ExecuteInEditMode]
     public class Hexagon : MonoBehaviour
     {
-        public HexagonType Type
+        public HexagonType HexType
         {
             get
             {
@@ -22,7 +22,7 @@ namespace HexagonPackage
                 {
                     type.Apply(this);
                 }
-                else SpriteRenderer.color = Color.white;
+                else SpriteRenderer.color = startColor;
             }
         }
         [SerializeField] private HexagonType type = default;
@@ -49,7 +49,7 @@ namespace HexagonPackage
                 cube = value;
             }
         }
-        [SerializeField] private Cube cube;
+        [HideInInspector][SerializeField] private Cube cube;
         public HexObject HexObject
         {
             get
@@ -61,7 +61,7 @@ namespace HexagonPackage
                 hexObject = value;
             }
         }
-        [SerializeField] private HexObject hexObject = default;
+        private HexObject hexObject = default;
 
         private List<MonoBehaviour> otherObjects = new List<MonoBehaviour>();
 
@@ -76,7 +76,7 @@ namespace HexagonPackage
                 data = value;
             }
         }
-        [SerializeField] private HexagonData data = default;
+        private HexagonData data = default;
 
         public HexagonGrid HexGrid
         {
@@ -95,37 +95,63 @@ namespace HexagonPackage
         {
             get
             {
-                if (hexText == null)
+                if (HexText == null)
                 {
                     return null;
                 }
-                return hexText.Text;
+                return HexText.Text;
             }
         }
-        private HexagonText hexText;      
+        public HexagonText HexText
+        {
+            get
+            {
+                return this.hexText;
+            }
+            private set
+            {
+                this.hexText = value;
+            }
+        }
+        private HexagonText hexText;
+
+        private Color startColor;
 
         public bool IsBlocked
         {
             get
             {
                 return (HexObject != null);
-            }         
+            }
+        }
+
+        public static readonly Vector3 RotationVector = new Vector3(0, 0, 60);
+
+        private void Reset()
+        {
+            SpriteRenderer = GetComponent<SpriteRenderer>();
+        }
+
+        private void Awake()
+        {
+            startColor = spriteRenderer.color;
         }
 
         private void OnValidate()
         {
-            if (Type != null)
+            if (HexType != null)
             {
-                Type.Apply(this);
+                HexType.Apply(this);
             }
         }
         private void OnDisable()
         {
-            if (hexText != null)
+            if (HexText != null)
             {
-                hexText.Disable();
-                hexText = null;
+                HexText.Disable();
+                HexText = null;
             }
+            HexObject = null;
         }
 
         public void AddOtherObject(MonoBehaviour m)
@@ -153,11 +179,11 @@ namespace HexagonPackage
         }
         public void DisableText()
         {
-            if (hexText != null)
+            if (HexText != null)
             {
-                hexText.Disable();
+                HexText.Disable();
             }
-            hexText = null;
+            HexText = null;
         }
         public void SetText(string text)
         {
@@ -170,23 +196,28 @@ namespace HexagonPackage
                 DisableText();
                 return;
             }
-            if (hexText == null)
+            if (!Application.isPlaying && HexText != null)
             {
-                hexText = HexGrid.GenerateHexText();
+                DestroyImmediate(HexText.gameObject);
             }
-            hexText.Setup(transform, text);
+            if (HexText == null)
+            {
+                HexText = HexGrid.GenerateHexText();
+            }            
+            HexText.Setup(transform, text);
         }
         public void SetColor(Color col)
         {
             SpriteRenderer.color = col;
         }
-        public virtual void Setup(Cube cube, HexagonData data, HexagonGrid grid)
-        {
+        public virtual void Setup(Cube cube, HexagonData data, HexagonGrid grid, HexagonType hexType = null)
+        {           
             this.Data = data;
             HexGrid = grid;
             Cube = cube;
             transform.localPosition = cube.ToWorldPosition(Data.VerticalSpacing, Data.HorizontalSpacing, Data.Flat);
             name = "Hex (" + Cube.X + ", " + Cube.Y + ")";
+            HexType = hexType;
             if (!grid.Hexagons.ContainsKey(Cube))
             {
                 HexGrid.Hexagons.Add(Cube, this);

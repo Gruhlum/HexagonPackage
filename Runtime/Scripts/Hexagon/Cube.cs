@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Windows;
 
 namespace HexagonPackage
 {
@@ -444,30 +446,17 @@ namespace HexagonPackage
             {
                 rY = -rX - rZ;
             }
-            else rZ = -rX - rY;
             return new Cube(rX, rY);
         }
 
         public static Cube GetCubeFromDirection(int direction)
         {
-            if (direction < 0)
-            {
-                direction += 6;
-            }
-            if (direction > 5)
-            {
-                direction -= 6;
-            }
+            direction = WrapDirection(direction);
             return CubeDirections[direction];
         }
         public static int WrapDirection(int value)
         {
-            int result = value % 6;
-            if (result < 0)
-            {
-                result += 6;
-            }
-            return result;
+            return (value % 6 + 6) % 6;
         }
 
         private bool Compare(Cube cube)

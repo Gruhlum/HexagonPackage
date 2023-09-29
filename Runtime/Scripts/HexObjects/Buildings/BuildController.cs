@@ -1,4 +1,4 @@
-using HecTecGames.SoundSystem;
+using HexTecGames.SoundSystem;
 using HexagonPackage;
 using HexTecGames;
 using HexTecGames.Basics;
@@ -8,16 +8,16 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using HexagonPackage.HexObjects.UI;
 
-namespace HexagonPackage.HexObjects.UI
+namespace HexagonPackage.HexObjects
 {
     public class BuildController : MonoBehaviour
     {
         [SerializeField] private BuildingInfo buildingInfo = default;
-        [SerializeField] private IResourceCollection player = default;
 
         [SerializeField] private Transform buildingParent = default;
-        public BuildGhost Ghost
+        public PlacementGhost Ghost
         {
             get
             {
@@ -28,7 +28,7 @@ namespace HexagonPackage.HexObjects.UI
                 ghost = value;
             }
         }
-        [SerializeField] private BuildGhost ghost = default;
+        [SerializeField] private PlacementGhost ghost = default;
 
         public Cube? HoverCube
         {
@@ -68,20 +68,32 @@ namespace HexagonPackage.HexObjects.UI
             {
                 return selectedBuilding;
             }
-            set
+            private set
             {
-                selectedBuilding = value;
-                Cursor.visible = selectedBuilding == null;
+                if (selectedBuilding == value)
+                {
+                    return;
+                }
+                BeforeSelectedBuildingChanged?.Invoke(selectedBuilding);
                 if (selectedBuilding != null)
                 {
-                    buildSelected.Play();
+                    selectedBuilding.OnBuildingSelected(false);
                 }
-                SelectedBuildingChanged?.Invoke(selectedBuilding);
+                selectedBuilding = value;
+                if (selectedBuilding != null)
+                {
+                    selectedBuilding.OnBuildingSelected(true);
+                    if (buildSelected != null)
+                    {
+                        buildSelected.Play();
+                    }
+                }
+                AfterSelectedBuildingChanged?.Invoke(selectedBuilding);
             }
         }
         [SerializeField] private Building selectedBuilding = default;
 
-        [SerializeField] private Spawner<HexHighlighter> highlightSpawner = default;
+        [SerializeField] private Spawner<HexHighlight> highlightSpawner = default;
 
         private List<Building> buildBuildings = new List<Building>();
 
@@ -93,8 +105,9 @@ namespace HexagonPackage.HexObjects.UI
         public event Action<Building> BeforeBuild;
         public event Action<Building> BeforeBuildingRemoved;
         public event Action AfterBuildingRemoved;
-        public event Action<Building> SelectedBuildingChanged;
-        public event Action<Building> BuildingDeselected;
+        public event Action<Building> AfterSelectedBuildingChanged;
+        public event Action<Building> BeforeSelectedBuildingChanged;
+        //public event Action<Building> BuildingDeselected;
 
         public bool RemoveSlotAfterBuild
         {
@@ -131,6 +144,10 @@ namespace HexagonPackage.HexObjects.UI
         {
             get
             {
+                if (StateController.IsPaused)
+                {
+                    return false;
+                }
                 return allowRemove == false && removalBlocker.Count == 0;
             }
         }
@@ -138,6 +155,10 @@ namespace HexagonPackage.HexObjects.UI
         {
             get
             {
+                if (StateController.IsPaused)
+                {
+                    return false;
+                }
                 return buildBlocker.Count == 0;
             }
         }
@@ -150,9 +171,12 @@ namespace HexagonPackage.HexObjects.UI
         private bool validBuildLocation = false;
 
         [Header("Sounds")]
+        [SerializeField] private SoundClip buildLockedLight;
         [SerializeField] private SoundClip buildLocked;
         [SerializeField] private SoundClip buildComplete;
         [SerializeField] private SoundClip buildSelected;
+        [SerializeField] private SoundClip buildDeselected;
+        [SerializeField] private SoundClip rotateSound;
 
         [SerializeField] private SoundClipGroup errorSounds;
         [SerializeField] private TweenPlayer cameraShaker = default;
@@ -160,10 +184,14 @@ namespace HexagonPackage.HexObjects.UI
 
         private Vector2 lastMousePos;
 
-        private string errorMsg;
+#pragma warning disable IDE0052 // Remove unread private members
+        [SerializeField] private string errorMsg;
+#pragma warning restore IDE0052 // Remove unread private members
 
         float dist = 0.01f;
         float timer = 0;
+
+        [SerializeField] private Cube debugHoverCube;
 
         private IEnumerator Shaker()
         {
@@ -173,12 +201,17 @@ namespace HexagonPackage.HexObjects.UI
             {
                 timer -= Time.deltaTime;
                 yield return new WaitForEndOfFrame();
-            }           
+            }
             dist = 0.01f;
         }
 
         private void Update()
         {
+            if (HoverCube.HasValue)
+            {
+                debugHoverCube = HoverCube.Value;
+            }
+
             if (deselectDelay > 0)
             {
                 deselectDelay -= Time.deltaTime;
@@ -188,7 +221,7 @@ namespace HexagonPackage.HexObjects.UI
             {
                 MoveTo(currentMousePos);
                 lastMousePos = currentMousePos;
-            }           
+            }
             if (Input.mouseScrollDelta.y > 0f)
             {
                 Rotate(1);
@@ -197,13 +230,25 @@ namespace HexagonPackage.HexObjects.UI
             {
                 Rotate(-1);
             }
-            else if (Input.GetKeyDown(KeyCode.R))
+            if (SelectedBuilding != null)
             {
-                if (Input.GetKey(KeyCode.LeftShift))
+                if (Input.GetKeyDown(KeyCode.R) && SelectedBuilding != null)
+                {
+                    if (Input.GetKey(KeyCode.LeftShift))
+                    {
+                        Rotate(1);
+                    }
+                    else Rotate(-1);
+                }
+                if (Input.GetKeyDown(KeyCode.Q))
                 {
                     Rotate(1);
                 }
-                else Rotate(-1);
+                if (Input.GetKeyDown(KeyCode.E))
+
+                {
+                    Rotate(-1);
+                }        
             }
             if (Input.GetMouseButtonDown(1))
             {
@@ -228,8 +273,7 @@ namespace HexagonPackage.HexObjects.UI
             if (SelectedBuilding.IsValidPosition(point, hexGrid, Rotation, false))
             {
                 Ghost.SetPosition(hexGrid.CubeToWorldPoint(point));
-                HoverCube = point;
-                if (allowLockedSound == true)
+                if (allowLockedSound == true && buildLocked != null)
                 {
                     buildLocked.Play();
                     allowLockedSound = false;
@@ -237,18 +281,31 @@ namespace HexagonPackage.HexObjects.UI
             }
             else
             {
+                if (allowLockedSound && buildLockedLight != null)
+                {
+                    buildLockedLight.Play();
+                    allowLockedSound = false;
+                }
                 Ghost.SetPosition(hexGrid.CubeToWorldPoint(point));
-                HoverCube = point;
             }
+            HoverCube = point;
         }
         public void Rotate(int value)
         {
-            if (SelectedBuilding != null && SelectedBuilding is DynamicBuilding dynamicBuilding)
+            if (SelectedBuilding == null)
             {
-                dynamicBuilding.BurstParticleSystem(1);
+                return;
             }
             Rotation = Cube.WrapDirection(Rotation + value);
             Ghost.Rotate(Rotation);
+            if (buildLocked != null && HoverCube.HasValue && SelectedBuilding.IsValidPosition(HoverCube.Value, hexGrid, Rotation, false))
+            {
+                buildLocked.Play();
+            }
+            if (rotateSound != null)
+            {
+                rotateSound.Play();
+            }
             UpdateLayout();
         }
         public void AllowRemoval(bool allow, MonoBehaviour m)
@@ -266,6 +323,7 @@ namespace HexagonPackage.HexObjects.UI
         }
         public void AllowBuild(bool allow, MonoBehaviour m)
         {
+            Debug.Log(m.gameObject.name + "  " + allow);
             if (!allow)
             {
                 if (buildBlocker.Contains(m))
@@ -300,15 +358,16 @@ namespace HexagonPackage.HexObjects.UI
         }
         private void LeftClickAction()
         {
+            if (deselectDelay > 0)
+            {
+                return;
+            }
             if (SelectedBuilding != null)
             {
                 if (!BuildingIsInsideGrid())
                 {
-                    if (deselectDelay <= 0)
-                    {
-                        DeselectBuilding();
-                    }
-                }              
+                    DeselectBuilding();
+                }
                 else Build(SelectedBuilding, hoverCube.Value, Rotation);
                 return;
             }
@@ -332,17 +391,18 @@ namespace HexagonPackage.HexObjects.UI
         }
         public void DeselectBuilding()
         {
-            if (SelectedBuilding is DynamicBuilding dynamic)
+            if (buildDeselected != null && SelectedBuilding != null)
             {
-                dynamic.SetHighlightBorder(false);
+                buildDeselected.Play();
             }
-            BuildingDeselected?.Invoke(SelectedBuilding);
+            SelectedBuilding = null;
             HoverCube = null;
             SetSelectedSlot(null);
             if (buildingInfo != null)
             {
                 buildingInfo.Disable();
             }
+
         }
         private bool CheckIfAllowed()
         {
@@ -400,10 +460,8 @@ namespace HexagonPackage.HexObjects.UI
             {
                 return;
             }
-
-            SetSelectedBuilding(building.Origin as Building, building.transform.position, building.Rotation);
-
             BeforeBuildingRemoved?.Invoke(building);
+
             buildBuildings.Remove(building);
             building.Destroy();
             UpdateLayout();
@@ -460,17 +518,20 @@ namespace HexagonPackage.HexObjects.UI
         }
         public Building Build(Building building, Cube center, int rotation, bool overwrite = false)
         {
+            //Debug.Log("Build 1 " + (CanBuild == false));
             if (!overwrite && CanBuild == false)
             {
                 return null;
             }
+            //Debug.Log("Build 2");
             if (building == null)
             {
                 return null;
             }
+            //Debug.Log("Build 3");
             if (!overwrite && validBuildLocation == false)
             {
-                errorSounds.Play(pitchMulti: UnityEngine.Random.Range(0.8f, 1.2f));
+                errorSounds.Play(1f, UnityEngine.Random.Range(0.8f, 1.2f));
                 cameraShaker.Play();
                 if (timer > 0)
                 {
@@ -479,13 +540,12 @@ namespace HexagonPackage.HexObjects.UI
                 else StartCoroutine(Shaker());
                 return null;
             }
-
+            //Debug.Log("Build 4");
             BeforeBuild?.Invoke(building);
             var clone = Instantiate(building);
             clone.Origin = building;
             clone.transform.parent = buildingParent;
             clone.Setup(center, hexGrid, rotation);
-            clone.transform.position = building.transform.position;
             buildBuildings.Add(clone);
             if (RemoveSlotAfterBuild)
             {
@@ -497,9 +557,8 @@ namespace HexagonPackage.HexObjects.UI
             }
             HoverCube = null;
             UpdateLayout();
-            if (buildComplete != null) 
+            if (buildComplete != null)
                 buildComplete.Play();
-            
             AfterBuild?.Invoke(clone);
             return clone;
         }
@@ -513,26 +572,28 @@ namespace HexagonPackage.HexObjects.UI
         }
         public void SetSelectedBuilding(Building building, int rotation = 0)
         {
-            if (building is DynamicBuilding dynamicBuilding)
-            {
-                dynamicBuilding.SetHighlightBorder(true);
-            }
-
             SelectedBuilding = building;
-            Ghost.gameObject.SetActive(SelectedBuilding != null);
-
-            if (building != null)
+            this.Rotation = rotation;
+            if (Ghost != null)
             {
-                ghost.SetPosition(building.transform.position);
+                if (building != null)
+                {
+                    ghost.SetPosition(building.transform.position);
+                }
+                Ghost.SetActive(SelectedBuilding != null);
+                Ghost.Rotate(rotation);
+
+                if (SelectedBuilding != null)
+                {
+                    Ghost.SetSprite(SelectedBuilding.Sprite, SelectedBuilding.GetColor());
+                }
             }
 
-            this.Rotation = rotation;
-            Ghost.Rotate(rotation);
             if (SelectedBuilding != null)
             {
-                Ghost.SetSprite(SelectedBuilding.Sprite, SelectedBuilding.GetColor());
                 deselectDelay = 0.1f;
             }
+            HoverCube = hexGrid.WorldPointToCube(Camera.main.GetMousePosition() + mouseOffset);
             UpdateLayout();
         }
         public void SetSelectedBuilding(Building building, Vector2 offset, int rotation = 0)
@@ -547,7 +608,7 @@ namespace HexagonPackage.HexObjects.UI
             {
                 SetSelectedBuilding(null);
             }
-            else SetSelectedBuilding(slot.Building);
+            else SetSelectedBuilding(slot.Building, rotation);
         }
         public List<Building> GetBuildBuildings()
         {

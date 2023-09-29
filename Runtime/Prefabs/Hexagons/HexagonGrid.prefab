@@ -144,7 +144,7 @@ GameObject:
   - component: {fileID: 8192743763058422250}
   - component: {fileID: 3998351725389534831}
   m_Layer: 0
-  m_Name: HexGrid
+  m_Name: HexagonGrid
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

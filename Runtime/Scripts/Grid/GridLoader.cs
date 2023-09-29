@@ -40,7 +40,7 @@ namespace HexagonPackage
             Grid.RemoveAll(true);
             foreach (var pos in GridToLoad.SavedHexagonPositions)
             {
-                Grid.CreateHexagon(pos.cube).Type = pos.type;
+                Grid.CreateHexagon(pos.cube).HexType = pos.type;
             }
         }
 //        public void FindAsset()

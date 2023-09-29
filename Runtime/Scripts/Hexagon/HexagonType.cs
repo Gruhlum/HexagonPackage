@@ -23,8 +23,12 @@ namespace HexagonPackage
         public bool ignoreColor;
 
         public void Apply(Hexagon hex)
-        {           
-            hex.SpriteRenderer.sprite = sprite;
+        {
+            if (sprite != null)
+            {
+                hex.SpriteRenderer.sprite = sprite;
+            }
+            
             if (!ignoreColor)
             {
                 hex.SpriteRenderer.color = color;

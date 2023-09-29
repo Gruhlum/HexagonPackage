@@ -29,9 +29,36 @@ namespace HexagonPackage
         }
         private bool overrideSave;
 
+        public bool IgnoreHexagonTypes
+        {
+            get
+            {
+                return ignoreHexagonTypes;
+            }
+            set
+            {
+                ignoreHexagonTypes = value;
+            }
+        }
+        [SerializeField] private bool ignoreHexagonTypes = default;
+
+        public bool SaveOnExit
+        {
+            get
+            {
+                return saveOnExit;
+            }
+            set
+            {
+                saveOnExit = value;
+            }
+        }
+        [SerializeField] private bool saveOnExit = true;
+
+
         private HexagonGrid oldGrid;
 
-        private void Awake()
+        protected virtual void Awake()
         {
             Application.quitting += Application_quitting;
         }
@@ -44,7 +71,10 @@ namespace HexagonPackage
         }
         private void Application_quitting()
         {
-            SavePositions(name, true);
+            if (SaveOnExit)
+            {
+                SavePositions(name, true);
+            }          
         }
 
         private void OnValidate()
@@ -65,13 +95,13 @@ namespace HexagonPackage
             }
             return true;
         }
-        public SavedGrid GenerateSavedGrid(List<Hexagon> hexagons)
+        public virtual SavedGrid GenerateSavedGrid(List<Hexagon> hexagons)
         {
             SavedGrid savedGrid = ScriptableObject.CreateInstance<SavedGrid>();
-            savedGrid.SaveGridData(hexagons);
+            savedGrid.SaveGridData(hexagons, IgnoreHexagonTypes);
             return savedGrid;
         }
-        public void SavePositions(string name, bool forceSave = false)
+        public virtual void SavePositions(string name, bool forceSave = false)
         {
             if (!AssetDatabase.IsValidFolder(folderLocation))
             {

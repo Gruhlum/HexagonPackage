@@ -4,10 +4,8 @@ using UnityEngine;
 
 namespace HexagonPackage
 {
-    public class HexHighlighter : MonoBehaviour
+    public class HexHighlight : MonoBehaviour
     {
-        //public float FadeIn = 0;
-        //public float FadeOut = 0;
 
         [SerializeField] private SpriteRenderer sr = default;
 
@@ -24,20 +22,12 @@ namespace HexagonPackage
         }
         private Hexagon hexagon;
 
-
         public void Flash(Hexagon hex, float fadeIn, float holdTime, float fadeOut)
         {
             SetPosition(hex);
             StartCoroutine(StartFlash(fadeIn, holdTime, fadeOut));
         }
-        public void FadeOut(float time)
-        {
-            if (!gameObject.activeInHierarchy)
-            {
-                return;
-            }
-            StartCoroutine(StartFadeOut(time));
-        }
+
         public void Setup(Hexagon hex, float fadeIn = 0)
         {
             Hexagon = hex;
@@ -59,7 +49,7 @@ namespace HexagonPackage
         }
         public void Setup(Vector3 pos, float fadeIn = 0)
         {
-            SetPosition(pos);
+            SetPosition(pos);          
             if (fadeIn > 0)
             {
                 StartCoroutine(StartFadeIn(fadeIn));
@@ -79,7 +69,7 @@ namespace HexagonPackage
         }
         public void Disable(float fadeOut = 0)
         {
-            if (fadeOut >= 0)
+            if (fadeOut >= 0 && gameObject.activeInHierarchy)
             {
                 StartCoroutine(StartFadeOut(fadeOut));
             }
@@ -88,7 +78,7 @@ namespace HexagonPackage
         public void SetColor(Color col, float fadeIn = 0)
         {
             if (fadeIn >= 0)
-            {
+            {               
                 StartCoroutine(StartColorChange(fadeIn, col));
             }
             sr.color = col;
@@ -115,13 +105,17 @@ namespace HexagonPackage
         private IEnumerator StartFadeIn(float fadeIn)
         {
             float startAlpha = sr.color.a;
+            Color newCol;
             for (float i = 0; i < fadeIn; i += Time.deltaTime)
             {
-                Color newCol = sr.color;
+                newCol = sr.color;
                 newCol.a = startAlpha * i / fadeIn;
                 sr.color = newCol;
                 yield return new WaitForEndOfFrame();
             }
+            newCol = sr.color;
+            newCol.a = startAlpha;
+            sr.color = newCol;
         }
         private IEnumerator StartFadeOut(float fadeOut)
         {

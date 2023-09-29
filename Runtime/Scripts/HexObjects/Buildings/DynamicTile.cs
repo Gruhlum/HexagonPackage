@@ -7,16 +7,27 @@ namespace HexagonPackage.HexObjects
 {
     public class DynamicTile : MonoBehaviour
     {
-        [SerializeField] private SpriteRenderer sr = default;
-        [SerializeField] private ParticleSystem ps = default;
+        public SpriteRenderer SpriteRenderer
+        {
+            get
+            {
+                return spriteRenderer;
+            }
+            private set
+            {
+                spriteRenderer = value;
+            }
+        }
+        [SerializeField] private SpriteRenderer spriteRenderer = default;
+
 
         public void Setup(Sprite sprite, Vector3 position, int rotation, bool flip, int sortingOrder)
         {
-            sr.sprite = sprite;
+            SpriteRenderer.sprite = sprite;
             transform.localPosition = position;
             transform.localEulerAngles = new Vector3(0, 0, 60 * rotation);
-            sr.flipY = flip;
-            sr.sortingOrder = sortingOrder;
+            SpriteRenderer.flipY = flip;
+            SpriteRenderer.sortingOrder = sortingOrder;
         }
         public void Setup(DynamicBuilding.DynamicInfo info)
         {
@@ -24,29 +35,12 @@ namespace HexagonPackage.HexObjects
         }
         public void SetColor(Color col)
         {
-            sr.color = col;
-            if (ps != null)
-            {
-                var module = ps.main;
-                module.startColor = col;
-            }
+            SpriteRenderer.color = col;
         }
         public void SetSortingOrder(int value)
         {
-            sr.sortingOrder = value;
+            SpriteRenderer.sortingOrder = value;
         }
 
-        public void ActivateParticleSystem(bool active)
-        {
-            if (active)
-            {
-                ps.Play();
-            }
-            else ps.Stop();
-        }
-        public void BurstParticleSystem(int particles)
-        {
-            ps.Emit(particles);
-        }
     }
 }

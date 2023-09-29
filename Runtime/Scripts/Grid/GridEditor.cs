@@ -5,6 +5,7 @@ using System.Linq;
 using UnityEngine;
 using HexagonPackage.HexagonComponents;
 using UnityEditor;
+using HexTecGames.Basics;
 
 namespace HexagonPackage
 {
@@ -20,7 +21,7 @@ namespace HexagonPackage
             {
                 return selectedType;
             }
-            set
+            private set
             {
                 selectedType = value;
             }
@@ -46,10 +47,44 @@ namespace HexagonPackage
         }
         [SerializeField] private bool allowRightClick = true;
 
+        public event Action<HexagonType> OnSelectedTypeChanged;
+
+        public readonly Blocker allowInput = new Blocker();
 
         private void Reset()
         {
             selectionController = GetComponent<SelectionController>();
+        }
+        private void Awake()
+        {
+            if (selectionController == null)
+            {
+                Debug.LogWarning("No SelectionController assigned");
+                return;
+            }
+            ActiveGrid.HexagonAdded += ActiveGrid_HexagonCreated;
+            ActiveGrid.HexagonRemoved += ActiveGrid_HexagonRemoved;
+            ActiveGrid.GridRemoved += ActiveGrid_GridRemoved;
+            selectionController.OnHexagonClicked += Hexagon_Clicked;
+            selectionController.OnMouseHoverChanged += EditGrid_MouseEnter;
+        }
+
+        private void ActiveGrid_GridRemoved()
+        {
+            CreateEditGrid();
+        }
+
+        private void Start()
+        {
+            CreateEditGrid();
+        }
+        private void Update()
+        {
+            if (Input.GetMouseButtonUp(0) || Input.GetMouseButtonUp(1))
+            {
+                enableHoverClick = false;
+                lastButton = -1;
+            }
         }
         private void ActiveGrid_HexagonRemoved(Hexagon hex)
         {
@@ -118,35 +153,17 @@ namespace HexagonPackage
                 }
             }
         }
-        private void Awake()
+       
+        public void SetSelectedType(HexagonType type)
         {
-            if (selectionController == null)
-            {
-                Debug.LogWarning("No SelectionController assigned");
-                return;
-            }
-            ActiveGrid.HexagonAdded += ActiveGrid_HexagonCreated;
-            ActiveGrid.HexagonRemoved += ActiveGrid_HexagonRemoved;
-            selectionController.Hexagon_Clicked += Hexagon_Clicked;
-            selectionController.MouseHover_Changed += EditGrid_MouseEnter;
-        }
-        private void Start()
-        {
-            CreateEditGrid();
-        }
-        private void Update()
-        {
-            if (Input.GetMouseButtonUp(0) || Input.GetMouseButtonUp(1))
-            {
-                enableHoverClick = false;
-                lastButton = -1;
-            }
+            SelectedType = type;
+            OnSelectedTypeChanged?.Invoke(type);
         }
 
         private void BuildHexagon(Cube cube)
-        {
+        {           
             Hexagon hex = ActiveGrid.CreateHexagon(cube);
-            hex.Type = SelectedType;
+            hex.HexType = SelectedType;
         }
 
         private void EditGrid_MouseEnter(Hexagon hex)
@@ -175,14 +192,18 @@ namespace HexagonPackage
                     }
                     else if (lastButton == 0)
                     {
-                        hex.Type = SelectedType;
+                        hex.HexType = SelectedType;
                     }
                 }
             }       
         }
 
         private void Hexagon_Clicked(Hexagon hex, int btn)
-        {           
+        {
+            if (!allowInput.Allowed)
+            {
+                return;
+            }
             if (btn == 1 && allowRightClick == false)
             {
                 return;
@@ -212,7 +233,7 @@ namespace HexagonPackage
                 }
                 else if (btn == 0)
                 {
-                    hex.Type = SelectedType;
+                    hex.HexType = SelectedType;
                 }
                 enableHoverClick = true;
             }

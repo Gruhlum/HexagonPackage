@@ -1,8 +1,19 @@
-Tooltip for Hover Hex
 
 
-Building Conditions (cost)
+Level setup:
 
-Different Building Sizes
+mechanics:
 
-merge selectionController and BuildInterface
+- 1 color tutorial
+
+- 2 colors
+
+- 3  colors
+
+- Color min coloring required for exit
+
+- Color mixing
+
+- Color delete-pickup
+
+- Color jump-pickup

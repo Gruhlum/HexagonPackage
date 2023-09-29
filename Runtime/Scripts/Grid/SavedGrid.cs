@@ -9,12 +9,17 @@ namespace HexagonPackage
     {
         public List<SavePosition> SavedHexagonPositions = new List<SavePosition>();
 
-        public void SaveGridData(List<Hexagon> hexagons)
+        public virtual void SaveGridData(List<Hexagon> hexagons, bool ignoreTypes)
         {
             SavedHexagonPositions.Clear();
             foreach (var hex in hexagons)
             {
-                SavedHexagonPositions.Add(new SavePosition(hex.Cube, hex.IsBlocked? null : hex.Type));
+                HexagonType type = null;
+                if (!ignoreTypes && hex.IsBlocked == false)
+                {
+                    type = hex.HexType;
+                }
+                SavedHexagonPositions.Add(new SavePosition(hex.Cube, type));
             }
         }
         public void MoveAllTiles(int x, int y)

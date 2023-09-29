@@ -14,10 +14,24 @@ namespace HexagonPackage
 
         [SerializeField] private Camera mainCam = default;
 
-        public event Action<Hexagon> MouseHover_Changed;
-        public event Action<Hexagon, int> Hexagon_Clicked;
-        [SerializeField] private Spawner<HexHighlighter> highlightSpawner;
-        private HexHighlighter lastHighlight;
+        public event Action<Hexagon> OnMouseHoverChanged;
+        public event Action<Hexagon, int> OnHexagonClicked;
+
+        public HexHighlightController HighlightSpawner
+        {
+            get
+            {
+                return this.highlightSpawner;
+            }
+            private set
+            {
+                this.highlightSpawner = value;
+            }
+        }
+        [SerializeField] private HexHighlightController highlightSpawner;
+
+        private HexHighlight lastHighlight;
+
         public Vector2 MousePosition
         {
             get
@@ -46,23 +60,18 @@ namespace HexagonPackage
                     return;
                 }
                 hoverHexagon = value;
-                if (lastHighlight != null)
-                {
-                    lastHighlight.Disable(0.1f);
-                    lastHighlight = null;
-                }
-                
-                if (hoverHexagon != null)
-                {
-                    lastHighlight = highlightSpawner.Spawn();
-                    lastHighlight.SetPosition(HoverHexagon);
-                }               
-                MouseHover_Changed?.Invoke(hoverHexagon);
+                HandleHighlights();
+                OnMouseHoverChanged?.Invoke(hoverHexagon);
             }
         }
+
+       
+
         private Hexagon hoverHexagon = default;
 
         public bool DisableClickEvents;
+
+        private Vector2 lastMousePos = default;
 
         private void Reset()
         {
@@ -70,13 +79,24 @@ namespace HexagonPackage
         }
 
 
+        private void OnEnable()
+        {
+            lastMousePos = mainCam.ScreenToWorldPoint(Input.mousePosition);
+        }
+
         private void Update()
-        {          
+        {
             mousePos = mainCam.ScreenToWorldPoint(Input.mousePosition);
+            if (Vector2.Distance(mousePos, lastMousePos) < 0.01f)
+            {
+                HandleClickEvents();
+                return;
+            }
+            lastMousePos = mousePos;
             Hexagon hex = null;
             foreach (var grid in ActiveGrids)
             {
-                hex = grid.WorldPointToHexagon(mousePos);                
+                hex = grid.WorldPointToHexagon(mousePos);
                 if (hex != null)
                 {
                     break;
@@ -84,6 +104,11 @@ namespace HexagonPackage
             }
             HoverHexagon = hex;
 
+            HandleClickEvents();
+        }
+
+        private void HandleClickEvents()
+        {
             if (HoverHexagon == null)
             {
                 return;
@@ -95,11 +120,25 @@ namespace HexagonPackage
             }
 
             if (Input.GetMouseButtonDown(0))
-                Hexagon_Clicked?.Invoke(HoverHexagon, 0);
+                OnHexagonClicked?.Invoke(HoverHexagon, 0);
             if (Input.GetMouseButtonDown(1))
-                Hexagon_Clicked?.Invoke(HoverHexagon, 1);
+                OnHexagonClicked?.Invoke(HoverHexagon, 1);
             if (Input.GetMouseButtonDown(2))
-                Hexagon_Clicked?.Invoke(HoverHexagon, 2);
+                OnHexagonClicked?.Invoke(HoverHexagon, 2);
+        }
+
+        private void HandleHighlights()
+        {
+            if (lastHighlight != null)
+            {
+                lastHighlight.Disable(highlightSpawner.FadeOut);
+                lastHighlight = null;
+            }
+
+            if (hoverHexagon != null && showMouseHover)
+            {
+                lastHighlight = HighlightSpawner.Spawn(HoverHexagon);
+            }
         }
     }
 }

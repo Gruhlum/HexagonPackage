@@ -75,7 +75,7 @@ namespace HexagonPackage
             {
                 display.ToggleColor(selectedDisplay == display);
             }
-            GridEditor.SelectedType = selectedDisplay.HexType;
+            GridEditor.SetSelectedType(selectedDisplay.HexType);
         }
     }
 }

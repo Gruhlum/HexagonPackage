@@ -12,12 +12,13 @@ namespace HexagonPackage.HexObjects
     public class DynamicBuilding : MultiTileBuilding
     {
         [SerializeField] private Sprite[] sprites = new Sprite[13];
-        [SerializeField] private Spawner<HexHighlighter> highlightSpawner = default;
-        [SerializeField] private HexagonGrid hexGrid = default;
+        [SerializeField] private Spawner<HexHighlight> highlightSpawner = default;
         [SerializeField] private HexagonData hexData = default;
         [SerializeField] private Spawner<DynamicTile> tileSpawner = default;
 
         private List<DynamicTile> tiles = new List<DynamicTile>();
+
+        [SerializeField] private Color highlightBorder = default;
 
         //[Flags]
         //public enum Options
@@ -71,7 +72,7 @@ namespace HexagonPackage.HexObjects
         }
         public override void Setup(Cube center, HexagonGrid grid, int rotation, bool block = true)
         {
-            highlightSpawner.AddInstances(highlightSpawner.Parent.GetComponentsInChildren<HexHighlighter>().ToList());
+            highlightSpawner.AddInstances(highlightSpawner.Parent.GetComponentsInChildren<HexHighlight>().ToList());
             highlightSpawner.DeactivateAll();
             SpawnTiles();
             //Debug.Log("hi");
@@ -79,7 +80,7 @@ namespace HexagonPackage.HexObjects
         }
         public void Setup(Vector3 position, int rotation)
         {
-            highlightSpawner.AddInstances(highlightSpawner.Parent.GetComponentsInChildren<HexHighlighter>().ToList());
+            highlightSpawner.AddInstances(highlightSpawner.Parent.GetComponentsInChildren<HexHighlight>().ToList());
             highlightSpawner.DeactivateAll();
             SpawnTiles();
             transform.position = position;          
@@ -96,10 +97,14 @@ namespace HexagonPackage.HexObjects
             {
                 return;
             }
+            if (tiles == null || tiles.Count == 0)
+            {
+                return;
+            }
             foreach (var tile in GetTiles())
             {
-                HexHighlighter highlight = highlightSpawner.Spawn();
-                highlight.Setup(tile.transform.position, 0.1f);
+                HexHighlight highlight = highlightSpawner.Spawn();
+                highlight.Setup(tile.transform.position, highlightBorder, 0.1f);
                 highlight.SetSortingOrder(sr.sortingOrder - 1);
             }
         }
@@ -108,6 +113,11 @@ namespace HexagonPackage.HexObjects
             List<DynamicTile> result = new List<DynamicTile>();
             result.AddRange(tiles);
             return result;
+        }
+
+        public override void OnBuildingSelected(bool selected)
+        {
+            SetHighlightBorder(selected);
         }
         public override List<Cube> GetOccupyingCubes(Cube center, int rotation = 0)
         {
@@ -419,20 +429,7 @@ namespace HexagonPackage.HexObjects
             }
             base.SetColor(col);
         }
-        public void ActivateParticleSystem(bool active)
-        {
-            foreach (var tile in tiles)
-            {
-                tile.ActivateParticleSystem(active);
-            }
-        }
-        public void BurstParticleSystem(int particles)
-        {
-            foreach (var tile in tiles)
-            {
-                tile.BurstParticleSystem(particles);
-            }
-        }
+
         public struct DynamicInfo
         {
             public Sprite Sprite;

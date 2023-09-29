@@ -19,21 +19,15 @@ namespace HexagonPackage.HexObjects
                 hexagon = value;
             }
         }
-        [SerializeField] private Hexagon hexagon = default;
+        private Hexagon hexagon = default;
 
         public Sprite Sprite
         {
             get
             {
-                return sprite;
-            }
-            set
-            {
-                sprite = value;
-                GetComponent<SpriteRenderer>().sprite = Sprite;
+                return sr.sprite;
             }
         }
-        [SerializeField] private Sprite sprite = default;
 
         [SerializeField] protected SpriteRenderer sr = default;
 
@@ -48,7 +42,7 @@ namespace HexagonPackage.HexObjects
                 center = value;
             }
         }
-        [SerializeField] private Cube center = default;
+        private Cube center = default;
 
 
         public HexObject Origin
@@ -76,20 +70,26 @@ namespace HexagonPackage.HexObjects
             }
         }
         private int rotation;
-       
+
+        protected HexagonGrid hexagonGrid;
+
 
         protected virtual void Awake()
         {
             sr = GetComponent<SpriteRenderer>();
-            sr.sprite = Sprite;
         }
         protected virtual void Reset()
         {
             sr = GetComponent<SpriteRenderer>();
-            sr.sprite = Sprite;
+        }
+        protected virtual void SetPosition(Cube cube)
+        {
+            transform.position = hexagonGrid.CubeToWorldPoint(cube);
         }
         public virtual void Setup(Cube center, HexagonGrid grid, int rotation = 0, bool block = true)
         {
+            hexagonGrid = grid;
+            SetPosition(center);
             Rotate(rotation);
             ClearHexagon();
             grid.Hexagons.TryGetValue(center, out Hexagon hex);
@@ -103,11 +103,7 @@ namespace HexagonPackage.HexObjects
             Hexagon = hex;
             Center = center;
         }
-        public virtual void Setup(Cube cube, HexagonGrid grid, Vector3 position, int rotation = 0, bool block = true)
-        {
-            transform.position = position;
-            Setup(cube, grid, rotation, block);
-        }
+
         public virtual List<Cube> GetOccupyingCubes(Cube center, int rotation = 0)
         {
             return new List<Cube>() { center };
@@ -172,6 +168,8 @@ namespace HexagonPackage.HexObjects
         {
             return new BuildEventArgs(new List<Cube>() { center }, this);
         }
+
+        public virtual void OnBuildingSelected(bool selected) { }
 
         public static void SwapObjects(HexObject unit1, HexObject unit2)
         {

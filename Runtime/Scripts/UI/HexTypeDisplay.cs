@@ -19,6 +19,8 @@ namespace HexagonPackage
 
         public HotKey HotKey;
 
+        [SerializeField][HideInInspector]private HexTypeManager manager;
+
         public void Reset()
         {
             image = GetComponentInChildren<Image>();
@@ -27,12 +29,16 @@ namespace HexagonPackage
 
         public void Setup(HexagonType hexType, HexTypeManager manager, HotKey hotKey)
         {
+            this.manager = manager;
             HexType = hexType;
             HotKey = hotKey;
             this.hotKeyText.text = hotKey.DisplayText;
-            image.color = hexType.Color;
-            this.image.sprite = hexType.sprite;
-            GetComponent<Button>().onClick.AddListener(delegate { manager.OnButtonClicked(this); });
+            if (hexType != null)
+            {
+                image.color = hexType.Color;
+                this.image.sprite = hexType.sprite;
+            }
+            else this.image.sprite = null;            
         }
 
         public void ToggleColor(bool active)
@@ -42,6 +48,10 @@ namespace HexagonPackage
                 hotKeyText.color = selectedColor;
             }
             else hotKeyText.color = defaultColor;
+        }
+        public void OnClicked()
+        {
+            manager.OnButtonClicked(this);
         }
     }
 }

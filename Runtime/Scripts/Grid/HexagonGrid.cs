@@ -39,6 +39,17 @@ namespace HexagonPackage
 
         [SerializeField] private bool showCoordinates;
 
+
+        private void Reset()
+        {
+            hexagonSpawner = new Spawner<Hexagon>();
+            if (transform.Find("Hexagons") == false)
+            {
+                GameObject go = new GameObject("Hexagons");
+                go.transform.SetParent(this.transform);
+                hexagonSpawner.Parent = go.transform;
+            }
+        }
         private void OnValidate()
         {
             hexagonSpawner.DestroyUnused();
@@ -54,15 +65,7 @@ namespace HexagonPackage
                 hex.HexGrid = this;
             }
         }
-        private void Reset()
-        {
-            hexagonSpawner = new Spawner<Hexagon>();
-            if (transform.Find("Hexes") == false)
-            {
-                GameObject go = new GameObject("Hexes");
-                go.transform.SetParent(this.transform);
-            }
-        }
+       
         public Hexagon ScreenPointToHexagon(Vector2 point)
         {
             Vector3 pos = Camera.main.ScreenToWorldPoint(point);
@@ -119,7 +122,7 @@ namespace HexagonPackage
             Hexagon[] hexes = hexagonSpawner.Parent.GetComponentsInChildren<Hexagon>();
             foreach (var hex in hexes)
             {
-                if (hex.gameObject.activeSelf)
+                if (!Hexagons.ContainsKey(hex.Cube) && hex.gameObject.activeSelf)
                 {
                     Hexagons.Add(hex.Cube, hex);
                 }
@@ -137,6 +140,7 @@ namespace HexagonPackage
             Hexagons.Clear();
             GridRemoved?.Invoke();
         }
+
         public void RemoveHexagon(Cube cube)
         {
             Hexagons.TryGetValue(cube, out Hexagon hex);
@@ -159,6 +163,17 @@ namespace HexagonPackage
             HexagonRemoved?.Invoke(hexagon);
         }
 
+        public void SetHexagons(List<Cube> cubes)
+        {
+            RemoveAll();
+            CreateHexagons(cubes);
+        }
+        public void SetHexagons(SavedGrid savedGrid)
+        {
+            RemoveAll();
+            CreateHexagons(savedGrid);
+        }
+
         public Hexagon CreateHexagon(Cube position)
         {
             if (Hexagons.ContainsKey(position))
@@ -168,7 +183,6 @@ namespace HexagonPackage
             }
             Hexagon hex = hexagonSpawner.Spawn();
             hex.Setup(position, HexagonData, this);
-            //hex.gameObject.transform.SetParent(transform.GetChild(0));
 
             if (showCoordinates)
             {
@@ -188,41 +202,22 @@ namespace HexagonPackage
             GridLoaded?.Invoke();
             return hexes;
         }
-        public List<Hexagon> CreateHexagons(SavedGrid savedGrid, List<HexagonType> ignoreTypes = null)
+        public List<Hexagon> CreateHexagons(SavedGrid savedGrid, bool ignoreTypes = false)
         {
             List<Hexagon> hexes = new List<Hexagon>();
             foreach (var position in savedGrid.SavedHexagonPositions)
             {
                 Hexagon hex = CreateHexagon(position.cube);
-                //if (ignoreTypes != null && ignoreTypes.Any(x => x == position.type))
-                //{
-                //    hex.Type = null;
-                //}
-                //else hex.Type = position.type;
+                if (!ignoreTypes)
+                {
+                    hex.HexType = position.type;
+                }               
                 hexes.Add(hex);
             }
             GridLoaded?.Invoke();
             return hexes;
         }
 
-        //private Hexagon GetEmptyHexagon()
-        //{
-        //    if (hexagonObjects.Any(x => x == null))
-        //    {
-        //        hexagonObjects.Clear();
-        //    }
-        //    if (hexagonObjects.Any(x => x.gameObject.activeSelf == false))
-        //    {
-        //        return hexagonObjects.Find(x => x.gameObject.activeSelf == false);
-        //    }
-        //    else
-        //    {
-        //        GameObject hexGO = Instantiate(hexagonPrefab, transform);
-        //        Hexagon hex = hexGO.GetComponent<Hexagon>();
-        //        hexagonObjects.Add(hex);
-        //        return hex;
-        //    }
-        //}
         public List<Hexagon> GetNeighbours(Cube cube, bool unblockedOnly)
         {
             List<Cube> neighbours = cube.GetNeighbours();
@@ -352,7 +347,7 @@ namespace HexagonPackage
             List<Hexagon> results = new List<Hexagon>();
             foreach (var hex in Hexagons.Values)
             {
-                if (hex.Type == type && (unblockedOnly == false || hex.IsBlocked == false))
+                if (hex.HexType == type && (unblockedOnly == false || hex.IsBlocked == false))
                 {
                     results.Add(hex);
                 }

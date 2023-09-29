@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5203311847426085421}
   - component: {fileID: 8052648216372727720}
   m_Layer: 0
-  m_Name: BuildGhost
+  m_Name: PlacementGhost
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

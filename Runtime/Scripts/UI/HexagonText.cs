@@ -7,32 +7,44 @@ namespace HexagonPackage
 {
 	public class HexagonText : MonoBehaviour
 	{
-		[SerializeField] private TextMeshProUGUI textGUI = default;
+        public TextMeshProUGUI TextGUI
+        {
+            get
+            {
+                return this.textGUI;
+            }
+            private set
+            {
+                this.textGUI = value;
+            }
+        }
+        [SerializeField] private TextMeshProUGUI textGUI = default;
 
-		public string Text
+        public string Text
 		{
 			get
 			{
-				if (textGUI == null)
+				if (TextGUI == null)
 				{
 					return null;
 				}
-				return textGUI.text;
+				return TextGUI.text;
 			}
 		}
 
-		public void Disable()
+        
+        public void Disable()
 		{
 			gameObject.SetActive(false);
 		}
 		public void Setup(Transform t, string text)
 		{
-			textGUI.text = text;
+			TextGUI.text = text;
 			transform.position = t.position;
 		}
 		public void ChangeText(string text)
 		{
-			textGUI.text = text;
+			TextGUI.text = text;
 		}
 	}
 }
