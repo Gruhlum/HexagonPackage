@@ -1,10 +1,13 @@
 {
   "name": "com.hextecgames.hexpackage",
-  "version": "1.0.5",
+  "version": "1.1.0",
   "displayName": "Hex Package",
   "description": "This is a Hex Package",
   "dependencies": {
-    "com.unity.textmeshpro": "3.0.1"
+    "com.unity.textmeshpro": "3.0.1",
+    "com.hextecgames.basics": "1.0.0",
+    "com.hextecgames.tweenlib": "1.0.0",
+    "com.hextecgames.soundsystem": "1.0.0"
   },
   "keywords": [
     "hexagon",
