@@ -7,7 +7,7 @@ namespace HexagonPackage
     [System.Serializable]
     public class HexagonData
     {
-        private static readonly float WIDTH_MULTIPLIER = 0.866025f; //Mathf.Sqrt(3) / 2;
+        public static readonly float WIDTH_MULTIPLIER = 0.866025f; //Mathf.Sqrt(3) / 2;
 
         public float Radius
         {
@@ -84,9 +84,9 @@ namespace HexagonPackage
         }
         [SerializeField] private bool flat = default;
 
-        public Cube WorldPositionToCube()
-        {
-            return Cube.WorldPositionToCube(VerticalSpacing, HorizontalSpacing, Radius, Flat);
-        }
+        //public Cube WorldPositionToCube()
+        //{
+        //    return Cube.WorldPositionToCube(VerticalSpacing, HorizontalSpacing, Radius, Flat);
+        //}
     }
 }

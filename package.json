@@ -5,9 +5,10 @@
   "description": "This is a Hex Package",
   "dependencies": {
     "com.unity.textmeshpro": "3.0.1",
-    "com.hextecgames.basics": "1.0.0",
+    "com.hextecgames.gridbasesystem": "1.0.0",
     "com.hextecgames.tweenlib": "1.0.0",
-    "com.hextecgames.soundsystem": "1.0.0"
+    "com.hextecgames.soundsystem": "1.0.0",
+    "com.hextecgames.basics": "1.0.0"
   },
   "keywords": [
     "hexagon",
