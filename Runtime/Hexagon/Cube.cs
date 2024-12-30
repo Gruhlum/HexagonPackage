@@ -387,7 +387,18 @@ namespace HexagonPackage
             }
             return pathCubes;
         }
+        public static List<Coord> CalculateAreaBetweenTwoPoints(Coord coord1, Coord coord2)
+        {
+            List<Coord> results = new List<Coord>() { coord1 };
+            if (coord1 == coord2)
+            {
+                return results;
+            }
+            
 
+
+            return results;
+        }
         public static List<Coord> GetArea(Coord center, int radius)
         {
             List<Coord> results = new List<Coord>();
@@ -540,7 +551,7 @@ namespace HexagonPackage
             return (value % 6 + 6) % 6;
         }
 
-       
+
         //public struct Path
         //{
         //    public readonly Cube Cube;

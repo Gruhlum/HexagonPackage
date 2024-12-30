@@ -11,6 +11,14 @@ namespace HexagonPackage
     {
         public HexagonData hexagonData;
 
+        public override int MaximumRotation
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+        }
+
         //    public Dictionary<Cube, Hexagon> Hexagons = new Dictionary<Cube, Hexagon>();
 
         //    [SerializeField] private Spawner<Hexagon> hexagonSpawner = default;
@@ -407,7 +415,10 @@ namespace HexagonPackage
         {
             return Cube.GetNeighbours(center);
         }
-
+        public override List<Coord> GetBoxBetweenTwoPoints(Coord coord1, Coord coord2)
+        {
+            throw new NotImplementedException();
+        }
         public override Coord GetDirectionCoord(Coord coord, int direction)
         {
             throw new NotImplementedException();
@@ -424,6 +435,11 @@ namespace HexagonPackage
         }
 
         public override List<Coord> GetAdjacents(Coord center)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override Coord GetDirectionFromInput(Vector2 input)
         {
             throw new NotImplementedException();
         }
