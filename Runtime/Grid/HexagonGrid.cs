@@ -9,13 +9,40 @@ namespace HexagonPackage
 {
     public class HexagonGrid : BaseGrid
     {
-        public HexagonData hexagonData;
+
+        public bool IsFlat
+        {
+            get
+            {
+                return isFlat;
+            }
+            private set
+            {
+                isFlat = value;
+            }
+        }
+        [SerializeField] private bool isFlat;
+
+        public int Radius
+        {
+            get
+            {
+                return radius;
+            }
+            private set
+            {
+                radius = value;
+            }
+        }
+        [SerializeField] private int radius;
+
+
 
         public override int MaximumRotation
         {
             get
             {
-                throw new NotImplementedException();
+                return 6;
             }
         }
 
@@ -402,12 +429,12 @@ namespace HexagonPackage
             Coord result = Cube.WorldPositionToCube(
                 position.x - transform.position.x, 
                 position.y - transform.position.y, 
-                hexagonData.Radius, false);
+                Radius / Cube.SQRT_3, IsFlat);
             return result;
         }
         public override Vector3 CoordToWorldPoint(Coord coord)
         {
-            Vector2 result = Cube.ToWorldPosition(coord, hexagonData.VerticalSpacing, hexagonData.HorizontalSpacing, false);
+            Vector2 result = Cube.ToWorldPosition(coord, TotalVerticalSpacing, TotalHorizontalSpacing, IsFlat);
             return result += (Vector2)transform.position;
         }
 
@@ -421,27 +448,34 @@ namespace HexagonPackage
         }
         public override Coord GetDirectionCoord(Coord coord, int direction)
         {
-            throw new NotImplementedException();
+            direction = Cube.WrapDirection(direction);
+            return coord + Cube.CubeDirections[direction];
         }
 
-        public override int GetDirection(Coord center, Coord coord)
+        public override int GetDirection(Coord coord1, Coord coord2)
         {
-            throw new NotImplementedException();
+            return Cube.GetDirection(coord1, coord2);
         }
 
         public override Coord GetRotatedCoord(Coord center, Coord coord, int rotation)
         {
-            throw new NotImplementedException();
+            center.Rotate(coord, rotation);
+            return center;
         }
 
         public override List<Coord> GetAdjacents(Coord center)
         {
-            throw new NotImplementedException();
+            return Cube.GetNeighbours(Center);
         }
 
         public override Coord GetDirectionFromInput(Vector2 input)
         {
             throw new NotImplementedException();
+        }
+
+        public override int GetDistance(Coord coord1, Coord coord2)
+        {
+            return Cube.GetDistance(coord1, coord2);
         }
     }
 }

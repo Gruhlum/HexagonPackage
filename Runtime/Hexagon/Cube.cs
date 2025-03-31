@@ -11,7 +11,7 @@ namespace HexagonPackage
 {
     public static class Cube
     {
-        private static readonly float SQRT_3 = 1.73205f;
+        public static readonly float SQRT_3 = 1.73205f;
 
         //public int X;
         //public int Y;
