@@ -7,7 +7,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.Windows;
 
-namespace HexagonPackage
+namespace HexTecGames.GridHexSystem
 {
     public static class Cube
     {

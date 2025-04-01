@@ -5,11 +5,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace HexagonPackage
+namespace HexTecGames.GridHexSystem
 {
     public class HexagonGrid : BaseGrid
     {
-
+        private static readonly float WIDTH_MULTIPLIER = 0.866025f; //Mathf.Sqrt(3) / 2;
+        private static readonly float SQRT_3 = 1.73205f;
         public bool IsFlat
         {
             get
@@ -23,7 +24,7 @@ namespace HexagonPackage
         }
         [SerializeField] private bool isFlat;
 
-        public int Radius
+        public float Radius
         {
             get
             {
@@ -34,7 +35,7 @@ namespace HexagonPackage
                 radius = value;
             }
         }
-        [SerializeField] private int radius;
+        [SerializeField] private float radius;
 
 
 
@@ -43,6 +44,54 @@ namespace HexagonPackage
             get
             {
                 return 6;
+            }
+        }
+
+        public override float TileWidth
+        {
+            get
+            {
+                if (IsFlat)
+                {
+                    return Radius * 2;
+                }
+                else return Radius * SQRT_3;
+            }
+        }
+
+        public override float TileHeight
+        {
+            get
+            {
+                if (IsFlat)
+                {
+                    return Radius * SQRT_3;
+                }
+                else return Radius * 2;
+            }
+        }
+
+        public override float TotalVerticalSpacing
+        {
+            get
+            {
+                if (IsFlat)
+                {
+                    return TileHeight  + VerticalSpacing;
+                }
+                else return TileHeight * 0.75f + VerticalSpacing;
+            }
+        }
+
+        public override float TotalHorizontalSpacing
+        {
+            get
+            {
+                if (IsFlat)
+                {
+                    return TileWidth * 0.75f + HorizontalSpacing;
+                }
+                else return TileWidth  + HorizontalSpacing;
             }
         }
 
@@ -427,9 +476,9 @@ namespace HexagonPackage
         public override Coord WorldPositionToCoord(Vector3 position)
         {
             Coord result = Cube.WorldPositionToCube(
-                position.x - transform.position.x, 
-                position.y - transform.position.y, 
-                Radius / Cube.SQRT_3, IsFlat);
+                position.x - transform.position.x,
+                position.y - transform.position.y,
+                Radius, IsFlat);
             return result;
         }
         public override Vector3 CoordToWorldPoint(Coord coord)

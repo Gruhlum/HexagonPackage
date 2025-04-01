@@ -6,7 +6,7 @@
 //using System.Linq;
 //using UnityEngine;
 
-//namespace HexagonPackage
+//namespace HexTecGames.GridHexSystem
 //{
 //    public class HexagonGridBackdrop : MonoBehaviour
 //    {
@@ -68,7 +68,7 @@
 //            transparentMaterial.color = col;
 //        }
 
-        
+
 
 //        private void OnDestroy()
 //        {

@@ -1,8 +1,8 @@
 {
-  "name": "com.hextecgames.hexpackage",
-  "version": "1.1.0",
-  "displayName": "Hex Package",
-  "description": "This is a Hex Package",
+  "name": "com.hextecgames.gridhexsystem",
+  "version": "1.2.0",
+  "displayName": "GridHexSystem",
+  "description": "This is a Hexagonal Grid System",
   "dependencies": {
     "com.unity.textmeshpro": "3.0.1",
     "com.hextecgames.gridbasesystem": "1.0.0",
@@ -25,6 +25,5 @@
       "path": "Samples/Example 1"
     }
   ],
-  "hideInEditor": true,
-  "type": "template"
+  "hideInEditor": true
 }

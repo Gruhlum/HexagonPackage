@@ -1,9 +1,9 @@
 {
-    "name": "HexTecGames.HexPackage.Editor",
+    "name": "HexTecGames.GridHexSystem.Editor",
     "rootNamespace": "",
     "references": [
-        "HexTecGames.HexPackage",
-        "HexTecGames.HexPackage.Runtime"
+        "GUID:34b8add2b7de2a04a92d1b0feff73c22",
+        "GUID:6055be8ebefd69e48b49212b09b47b2f"
     ],
     "includePlatforms": [
         "Editor"

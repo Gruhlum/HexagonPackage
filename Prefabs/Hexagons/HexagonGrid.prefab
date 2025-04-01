@@ -45,17 +45,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   grid: {fileID: 3998351725389534831}
-  createOnStart: 1
-  width: 24
-  height: 24
+  createOnAwake: 1
   center:
     x: 0
     y: 0
     isValid: 0
-  allTileDatas:
-  - {fileID: 11400000, guid: 6e82503085c1744419b5b18ec1cf94e6, type: 2}
-  allTileObjectDatas: []
-  gridToLoad: {fileID: 0}
+  defaultTileData: {fileID: 11400000, guid: 6e82503085c1744419b5b18ec1cf94e6, type: 2}
+  shape:
+    rid: 1468298863096889344
+  references:
+    version: 2
+    RefIds:
+    - rid: 1468298863096889344
+      type: {class: HexagonShape, ns: HexTecGames.GridHexSystem.Shapes, asm: HexTecGames.GridHexSystem.Runtime}
+      data:
+        radius: 20
 --- !u!1 &3401151413993848679
 GameObject:
   m_ObjectHideFlags: 0
@@ -308,12 +312,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   eventSystem: {fileID: 6268950185047399656}
-  tileWidth: 1
-  tileHeight: 1
   verticalSpacing: 0
   horizontalSpacing: 0
   isFlat: 0
-  radius: 0
+  radius: 0.5
 --- !u!1001 &1312176691985789594
 PrefabInstance:
   m_ObjectHideFlags: 0

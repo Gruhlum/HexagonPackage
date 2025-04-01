@@ -3,7 +3,7 @@
 //using System.Linq;
 //using UnityEngine;
 
-//namespace HexagonPackage
+//namespace HexTecGames.GridHexSystem
 //{
 //    public class CubePattern
 //    {
