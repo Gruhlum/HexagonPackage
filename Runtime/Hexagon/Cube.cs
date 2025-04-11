@@ -468,9 +468,11 @@ namespace HexTecGames.GridHexSystem
         //    //Debug.Log(angle + " - " + direction);
         //    return direction;
         //}
-        public static int GetDistance(Coord coord1, Coord coord2)
+        public static int GetDistance(Coord c1, Coord c2)
         {
-            return (Mathf.Abs(coord1.x - coord2.x) + Mathf.Abs(coord1.y - coord2.y));
+            int z1 = -(c1.x + c1.y);
+            int z2 = -(c2.x + c2.y);
+            return Mathf.RoundToInt((Mathf.Abs(c1.x - c2.x) + Mathf.Abs(c1.y - c2.y) + Mathf.Abs(z1 - z2)) / 2);
         }
 
         //public Cube GetMirrorVertical(int centerY = 0)
