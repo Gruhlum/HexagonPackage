@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   grid: {fileID: 3998351725389534831}
-  createOnAwake: 1
+  createOnStart: 1
   center:
     x: 0
     y: 0
@@ -225,7 +225,7 @@ GameObject:
   - component: {fileID: 4571281258908419791}
   - component: {fileID: 152702185243631490}
   m_Layer: 0
-  m_Name: GridVisualizer
+  m_Name: TileVisualizer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -262,6 +262,7 @@ MonoBehaviour:
   defaultVisual: {fileID: 3526103899067706437, guid: dca82fc1d8959ab48a12e088e6c24794, type: 3}
   spawner:
     parent: {fileID: 4571281258908419791}
+  alwaysActive: 1
 --- !u!1 &9117232211863494907
 GameObject:
   m_ObjectHideFlags: 0

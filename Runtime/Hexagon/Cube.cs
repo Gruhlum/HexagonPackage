@@ -114,15 +114,15 @@ namespace HexTecGames.GridHexSystem
             }
             else return new Vector2(horizontalSpacing * (coord.x + coord.y / 2f), verticalSpacing * coord.y);
         }
-        public static Coord WorldPositionToCube(float x, float y, float radius, bool flat)
+        public static Coord WorldPositionToCube(float x, float y, float radius, float spacingX, float spacingY, bool flat)
         {
             if (flat) //TODO: Not working
             {
-                return Round((SQRT_3 / 3 * x - 1f / 3f * y) / radius, (2f / 3f * y) / radius);
+                return Round((SQRT_3 / 3 * x - 1f / 3f * y) / radius - (spacingX * x), (2f / 3f * y) / radius - (spacingY * y));
             }
             else
             {
-                return Round((SQRT_3 / 3 * x - 1f / 3f * y) / radius, (2f / 3f * y) / radius);
+                return Round((SQRT_3 / 3 * x - 1f / 3f * y) / radius - (spacingX * x), (2f / 3f * y) / radius - (spacingY * y));
             }
         }
         public static Coord GetNeighbour(Coord center, int direction)

@@ -37,8 +37,6 @@ namespace HexTecGames.GridHexSystem
         }
         [SerializeField] private float radius;
 
-
-
         public override int MaximumRotation
         {
             get
@@ -46,7 +44,6 @@ namespace HexTecGames.GridHexSystem
                 return 6;
             }
         }
-
         public override float TileWidth
         {
             get
@@ -58,7 +55,6 @@ namespace HexTecGames.GridHexSystem
                 else return Radius * SQRT_3;
             }
         }
-
         public override float TileHeight
         {
             get
@@ -70,19 +66,17 @@ namespace HexTecGames.GridHexSystem
                 else return Radius * 2;
             }
         }
-
         public override float TotalVerticalSpacing
         {
             get
             {
                 if (IsFlat)
                 {
-                    return TileHeight  + VerticalSpacing;
+                    return TileHeight + VerticalSpacing;
                 }
                 else return TileHeight * 0.75f + VerticalSpacing;
             }
         }
-
         public override float TotalHorizontalSpacing
         {
             get
@@ -91,7 +85,7 @@ namespace HexTecGames.GridHexSystem
                 {
                     return TileWidth * 0.75f + HorizontalSpacing;
                 }
-                else return TileWidth  + HorizontalSpacing;
+                else return TileWidth + HorizontalSpacing;
             }
         }
 
@@ -478,7 +472,7 @@ namespace HexTecGames.GridHexSystem
             Coord result = Cube.WorldPositionToCube(
                 position.x - transform.position.x,
                 position.y - transform.position.y,
-                Radius, IsFlat);
+                Radius, HorizontalSpacing, VerticalSpacing, IsFlat);
             return result;
         }
         public override Vector3 CoordToWorldPoint(Coord coord)
