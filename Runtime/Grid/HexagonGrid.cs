@@ -469,12 +469,18 @@ namespace HexTecGames.GridHexSystem
 
         public override Coord WorldPositionToCoord(Vector3 position)
         {
-            Coord result = Cube.WorldPositionToCube(
+            Coord result = Cube.WorldPositionToCoord(
                 position.x - transform.position.x,
                 position.y - transform.position.y,
                 Radius, HorizontalSpacing, VerticalSpacing, IsFlat);
             return result;
         }
+
+        //public Coord Translate(Coord coord)
+        //{
+        //    return Cube.Round(coord.x * TotalHorizontalSpacing, coord.y * TotalVerticalSpacing);
+        //}
+
         public override Vector3 CoordToWorldPoint(Coord coord)
         {
             Vector2 result = Cube.ToWorldPosition(coord, TotalVerticalSpacing, TotalHorizontalSpacing, IsFlat);
@@ -484,10 +490,6 @@ namespace HexTecGames.GridHexSystem
         public override List<Coord> GetNeighbourCoords(Coord center)
         {
             return Cube.GetNeighbours(center);
-        }
-        public override List<Coord> GetBoxBetweenTwoPoints(Coord coord1, Coord coord2)
-        {
-            throw new NotImplementedException();
         }
         public override Coord GetDirectionCoord(Coord coord, int direction)
         {
@@ -519,6 +521,21 @@ namespace HexTecGames.GridHexSystem
         public override int GetDistance(Coord coord1, Coord coord2)
         {
             return Cube.GetDistance(coord1, coord2);
+        }
+
+        public override Coord GetClosestCoordInLine(Coord start, Coord target, int direction)
+        {
+            return Cube.GetClosestCoordInLine(start, target, direction);
+        }
+
+        public override List<Coord> GetLine(Coord start, Coord target)
+        {
+            return Cube.GetLine(start, target);
+        }
+
+        public override List<Coord> GetCoordsInBox(Vector2 start, Vector2 end)
+        {
+            return Cube.GetCoordsInBox(WorldPositionToCoord(start), WorldPositionToCoord(end));
         }
     }
 }
