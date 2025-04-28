@@ -64,31 +64,9 @@ namespace HexTecGames.GridHexSystem
         }
         private static readonly Coord right = new Coord(1, 0);
 
-        //public Cube(Cube cube)
-        //{
-        //    X = cube.X;
-        //    Y = cube.Y;
-        //    Z = cube.Z;
-        //}
+
 
         //public Cube(int x, int y)
-        //{
-        //    X = x;
-        //    Y = y;
-        //    Z = -(x + y);
-        //}
-        //public Cube(float x, float y)
-        //{
-        //    this = Round(x, y, -(x + y));
-        //}
-
-        //public void SetValues(Cube cube)
-        //{
-        //    X = cube.X;
-        //    Y = cube.Y;
-        //    Z = cube.Z;
-        //}
-        //public void SetValues(int x, int y)
         //{
         //    X = x;
         //    Y = y;
@@ -106,16 +84,32 @@ namespace HexTecGames.GridHexSystem
         //    this += center;
         //}
 
-        public static Vector2 ToWorldPosition(Coord coord, float verticalSpacing, float horizontalSpacing, bool flat)
+        public static Vector2 CoordToWorldPosition(Coord coord, float spacingX, float spacingY, bool flat)
         {
             if (flat)
             {
-                return new Vector2(verticalSpacing * coord.x, horizontalSpacing * (coord.y + coord.x / 2f));
+                return new Vector2(spacingX * coord.x, spacingY * (coord.y + coord.x / 2f));
             }
-            else return new Vector2(horizontalSpacing * (coord.x + coord.y / 2f), verticalSpacing * coord.y);
+            else return new Vector2(spacingX * (coord.x + coord.y / 2f), spacingY * coord.y);
+        }
+
+        public static Coord WorldPositionToCoord(Vector2 position, float radius, float spacingX, float spacingY, bool flat)
+        {
+            return WorldPositionToCoord(position.x, position.y, radius, spacingX, spacingX, flat);
         }
         public static Coord WorldPositionToCoord(float x, float y, float radius, float spacingX, float spacingY, bool flat)
         {
+            /*
+             *  var q = (sqrt(3)/3 * point.x  -  1./3 * point.y) / size
+                var r = (                        2./3 * point.y) / size
+            */
+            float magic = SQRT_3 / 3f;
+            float posX = (magic * x - 1f / 3f * y) / radius + (spacingX * magic); // 0.55773f; // 0.576 magic number
+            float posY = (2f / 3f * y) / radius;
+
+            return Round(posX, posY);
+
+
             return Round((SQRT_3 / 3f * x - 1f / 3f * y) / radius - (spacingX * x), (2f / 3f * y) / radius - (spacingY * y));
 
             if (flat) //TODO: Not working
@@ -411,7 +405,7 @@ namespace HexTecGames.GridHexSystem
         public static List<Coord> GetArea(Coord center, int radius)
         {
             List<Coord> results = new List<Coord>();
-            for (int i = 0; i <= radius; i++)
+            for (int i = 0; i < radius; i++)
             {
                 results.AddRange(GetRing(center, i));
             }
@@ -419,7 +413,6 @@ namespace HexTecGames.GridHexSystem
         }
         public static List<Coord> GetRing(Coord center, int radius)
         {
-            Debug.Log("RING: " + center + " Radius: " + radius);
             List<Coord> results = new List<Coord>();
             if (radius == 0)
             {
@@ -641,13 +634,48 @@ namespace HexTecGames.GridHexSystem
 
         public static Coord GetClosestCoordInLine(Coord start, Coord target, int direction)
         {
-            bool lockX = direction == 0 || direction == 2;
-
-            if (lockX)
+            if (direction == 2 || direction == 5)
             {
                 return new Coord(start.x, target.y);
             }
-            else return new Coord(target.x, start.y);
+            else if (direction == 1 || direction == 4)
+            {
+                return new Coord(target.x, start.y);
+            }
+            else
+            {
+                int z = -(start.x + start.y);
+                int y = target.y;
+                int x = -(y + z);
+
+                return new Coord(x, y);
+            }
+        }
+
+        public static List<Coord> GetCorner(int direction, int radius, int thickness)
+        {
+            List<Coord> results = new List<Coord>();
+
+            Coord corner = GetCorner(direction, radius);
+            results.Add(corner);
+
+            for (int i = 1; i < thickness; i++)
+            {
+                for (int j = 0; j < 2; j++)
+                {
+                    // Get the neighbours that are 2 and 4 directions apart from corner
+                    Coord neighbourDirection = CubeDirections[WrapDirection(direction + ((1 + j) * 2))];
+                    neighbourDirection *= i;
+                    results.Add(corner + neighbourDirection);
+                }
+            }
+
+            return results;
+        }
+        public static Coord GetCorner(int direction, int radius)
+        {
+            Coord directionCube = CubeDirections[WrapDirection(direction)];
+            return directionCube * radius;
         }
 
 

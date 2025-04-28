@@ -153,8 +153,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   grid: {fileID: 3998351725389534831}
-  eventSys: {fileID: 0}
   showDebugs: 0
+  continousDetection: 1
 --- !u!1 &5189345035192667504
 GameObject:
   m_ObjectHideFlags: 0
@@ -259,7 +259,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   grid: {fileID: 3998351725389534831}
-  defaultVisual: {fileID: 3526103899067706437, guid: dca82fc1d8959ab48a12e088e6c24794, type: 3}
+  defaultVisual: {fileID: 1639572975452723763, guid: dca82fc1d8959ab48a12e088e6c24794, type: 3}
   spawner:
     parent: {fileID: 4571281258908419791}
   alwaysActive: 1

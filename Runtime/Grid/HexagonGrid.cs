@@ -66,17 +66,6 @@ namespace HexTecGames.GridHexSystem
                 else return Radius * 2;
             }
         }
-        public override float TotalVerticalSpacing
-        {
-            get
-            {
-                if (IsFlat)
-                {
-                    return TileHeight + VerticalSpacing;
-                }
-                else return TileHeight * 0.75f + VerticalSpacing;
-            }
-        }
         public override float TotalHorizontalSpacing
         {
             get
@@ -86,6 +75,17 @@ namespace HexTecGames.GridHexSystem
                     return TileWidth * 0.75f + HorizontalSpacing;
                 }
                 else return TileWidth + HorizontalSpacing;
+            }
+        }
+        public override float TotalVerticalSpacing
+        {
+            get
+            {
+                if (IsFlat)
+                {
+                    return TileHeight + VerticalSpacing;
+                }
+                else return TileHeight * 0.75f + VerticalSpacing;
             }
         }
 
@@ -469,10 +469,8 @@ namespace HexTecGames.GridHexSystem
 
         public override Coord WorldPositionToCoord(Vector3 position)
         {
-            Coord result = Cube.WorldPositionToCoord(
-                position.x - transform.position.x,
-                position.y - transform.position.y,
-                Radius, HorizontalSpacing, VerticalSpacing, IsFlat);
+            position -= transform.position;
+            Coord result = Cube.WorldPositionToCoord(position, Radius, HorizontalSpacing, VerticalSpacing, IsFlat);
             return result;
         }
 
@@ -481,9 +479,10 @@ namespace HexTecGames.GridHexSystem
         //    return Cube.Round(coord.x * TotalHorizontalSpacing, coord.y * TotalVerticalSpacing);
         //}
 
-        public override Vector3 CoordToWorldPoint(Coord coord)
+        public override Vector3 CoordToWorldPosition(Coord coord)
         {
-            Vector2 result = Cube.ToWorldPosition(coord, TotalVerticalSpacing, TotalHorizontalSpacing, IsFlat);
+            //Debug.Log(TotalHorizontalSpacing + " - " + TotalVerticalSpacing);
+            Vector2 result = Cube.CoordToWorldPosition(coord, TotalHorizontalSpacing, TotalVerticalSpacing, IsFlat);
             return result += (Vector2)transform.position;
         }
 
@@ -510,7 +509,7 @@ namespace HexTecGames.GridHexSystem
 
         public override List<Coord> GetAdjacents(Coord center)
         {
-            return Cube.GetNeighbours(Center);
+            return Cube.GetNeighbours(center);
         }
 
         public override Coord GetDirectionFromInput(Vector2 input)
@@ -536,6 +535,11 @@ namespace HexTecGames.GridHexSystem
         public override List<Coord> GetCoordsInBox(Vector2 start, Vector2 end)
         {
             return Cube.GetCoordsInBox(WorldPositionToCoord(start), WorldPositionToCoord(end));
+        }
+
+        public override List<Coord> GetCorner(int direction, int radius, int thickness)
+        {
+            return Cube.GetCorner(direction, radius, thickness);
         }
     }
 }
