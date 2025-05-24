@@ -1,11 +1,9 @@
-﻿using HexTecGames.GridBaseSystem;
+﻿using HexTecGames.Basics;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.Windows;
 
 namespace HexTecGames.GridHexSystem
 {
@@ -469,6 +467,14 @@ namespace HexTecGames.GridHexSystem
             else return -1;
         }
 
+        public static Coord GetDirectionCoord(int direction)
+        {
+            if (direction < 0 || direction >= CubeDirections.Count)
+            {
+                direction = WrapDirection(direction);
+            }
+            return CubeDirections[direction];
+        }
         public static int GetDirection(Coord coord1, Coord coord2)
         {
             if (coord1 == null || coord1 == coord2)
@@ -676,6 +682,23 @@ namespace HexTecGames.GridHexSystem
         {
             Coord directionCube = CubeDirections[WrapDirection(direction)];
             return directionCube * radius;
+        }
+
+        public static bool IsInLine(Coord coord1, Coord coord2)
+        {
+            if (coord1.x == coord2.x)
+            {
+                return true;
+            }
+            if (coord1.y == coord2.y)
+            {
+                return true;
+            }
+            if ((coord1.x + coord1.y) == (coord2.x + coord2.y))
+            {
+                return true;
+            }
+            return false;
         }
 
 

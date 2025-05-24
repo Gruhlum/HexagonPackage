@@ -490,10 +490,9 @@ namespace HexTecGames.GridHexSystem
         {
             return Cube.GetNeighbours(center);
         }
-        public override Coord GetDirectionCoord(Coord coord, int direction)
+        public override Coord GetDirectionCoord(int direction)
         {
-            direction = Cube.WrapDirection(direction);
-            return coord + Cube.CubeDirections[direction];
+            return Cube.GetDirectionCoord(direction);
         }
 
         public override int GetDirection(Coord coord1, Coord coord2)
@@ -526,7 +525,11 @@ namespace HexTecGames.GridHexSystem
         {
             return Cube.GetClosestCoordInLine(start, target, direction);
         }
-
+        public override bool IsInLine(Coord coord1, Coord coord2)
+        {
+            var result = Cube.IsInLine(coord1, coord2);
+            return result;
+        }
         public override List<Coord> GetLine(Coord start, Coord target)
         {
             return Cube.GetLine(start, target);
