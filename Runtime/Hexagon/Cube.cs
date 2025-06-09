@@ -93,7 +93,7 @@ namespace HexTecGames.GridHexSystem
 
         public static Coord WorldPositionToCoord(Vector2 position, float radius, float spacingX, float spacingY, bool flat)
         {
-            return WorldPositionToCoord(position.x, position.y, radius, spacingX, spacingX, flat);
+            return WorldPositionToCoord(position.x, position.y, radius, spacingX, spacingY, flat);
         }
         public static Coord WorldPositionToCoord(float x, float y, float radius, float spacingX, float spacingY, bool flat)
         {
@@ -101,12 +101,13 @@ namespace HexTecGames.GridHexSystem
              *  var q = (sqrt(3)/3 * point.x  -  1./3 * point.y) / size
                 var r = (                        2./3 * point.y) / size
             */
-            float magic = SQRT_3 / 3f;
-            float posX = (magic * x - 1f / 3f * y) / radius + (spacingX * magic); // 0.55773f; // 0.576 magic number
+
+            float magic = SQRT_3 / 3f; // 0.55773f;
+            float posX = (magic * x - 1f / 3f * y) / radius;
             float posY = (2f / 3f * y) / radius;
 
-            return Round(posX, posY);
-
+            Coord result = Round(posX, posY);
+            return result;
 
             return Round((SQRT_3 / 3f * x - 1f / 3f * y) / radius - (spacingX * x), (2f / 3f * y) / radius - (spacingY * y));
 
