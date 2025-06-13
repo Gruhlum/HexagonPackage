@@ -790,7 +790,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   grid: {fileID: 2077537668}
-  gridToLoad: {fileID: 11400000, guid: b4ca1335cfb2f9b4484a24c0f7e78835, type: 2}
+  gridToLoad: {fileID: 11400000, guid: 27461d655d2be9d48bd084da663322a3, type: 2}
   loadOnStart: 1
 --- !u!4 &689908442
 Transform:
@@ -1228,7 +1228,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   grid: {fileID: 2077537668}
-  autosave: 0
+  autosave: 1
   gridName: Grid 1
   saveMode: 1
   assetPath: ScriptableObjects/Grids
@@ -2238,7 +2238,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2458358321210953255, guid: fa76830b4e2a21d46a1f8658010f235b, type: 3}
       propertyPath: createOnStart
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2458358321210953255, guid: fa76830b4e2a21d46a1f8658010f235b, type: 3}
       propertyPath: defaultTileData
