@@ -461,6 +461,7 @@ MonoBehaviour:
   grid: {fileID: 2077537668}
   gridToLoad: {fileID: 11400000, guid: 27461d655d2be9d48bd084da663322a3, type: 2}
   loadOnStart: 0
+  myGameObject: {x: 0, y: 0, z: 0}
 --- !u!4 &689908442
 Transform:
   m_ObjectHideFlags: 0
@@ -1866,7 +1867,7 @@ PrefabInstance:
     - target: {fileID: 2458358321210953255, guid: fa76830b4e2a21d46a1f8658010f235b, type: 3}
       propertyPath: defaultTileData
       value: 
-      objectReference: {fileID: 11400000, guid: da08748394ef99747a2542876d6c495a, type: 2}
+      objectReference: {fileID: 11400000, guid: bc704e51af3be92448b3f99c7166e0f6, type: 2}
     - target: {fileID: 2458358321210953255, guid: fa76830b4e2a21d46a1f8658010f235b, type: 3}
       propertyPath: managedReferences[1468298863096889344].radius
       value: 10
