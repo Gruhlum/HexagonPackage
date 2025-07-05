@@ -1,8 +1,6 @@
-﻿using HexTecGames.Basics;
-using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using HexTecGames.Basics;
 using UnityEngine;
 
 namespace HexTecGames.GridHexSystem
@@ -86,9 +84,9 @@ namespace HexTecGames.GridHexSystem
         {
             if (flat)
             {
-                return new Vector2(spacingX * coord.x, spacingY * (coord.y + coord.x / 2f));
+                return new Vector2(spacingX * coord.x, spacingY * (coord.y + (coord.x / 2f)));
             }
-            else return new Vector2(spacingX * (coord.x + coord.y / 2f), spacingY * coord.y);
+            else return new Vector2(spacingX * (coord.x + (coord.y / 2f)), spacingY * coord.y);
         }
 
         public static Coord WorldPositionToCoord(Vector2 position, float radius, float spacingX, float spacingY, bool flat)
@@ -103,21 +101,21 @@ namespace HexTecGames.GridHexSystem
             */
 
             float magic = SQRT_3 / 3f; // 0.55773f;
-            float posX = (magic * x - 1f / 3f * y) / radius;
-            float posY = (2f / 3f * y) / radius;
+            float posX = ((magic * x) - (1f / 3f * y)) / radius;
+            float posY = 2f / 3f * y / radius;
 
             Coord result = Round(posX, posY);
             return result;
 
-            return Round((SQRT_3 / 3f * x - 1f / 3f * y) / radius - (spacingX * x), (2f / 3f * y) / radius - (spacingY * y));
+            return Round((((SQRT_3 / 3f * x) - (1f / 3f * y)) / radius) - (spacingX * x), (2f / 3f * y / radius) - (spacingY * y));
 
             if (flat) //TODO: Not working
             {
-                return Round((SQRT_3 / 3 * x - 1f / 3f * y) / radius - (spacingX * x), (2f / 3f * y) / radius - (spacingY * y));
+                return Round((((SQRT_3 / 3 * x) - (1f / 3f * y)) / radius) - (spacingX * x), (2f / 3f * y / radius) - (spacingY * y));
             }
             else
             {
-                return Round((SQRT_3 / 3 * x - 1f / 3f * y) / radius - (spacingX * x), (2f / 3f * y) / radius - (spacingY * y));
+                return Round((((SQRT_3 / 3 * x) - (1f / 3f * y)) / radius) - (spacingX * x), (2f / 3f * y / radius) - (spacingY * y));
             }
         }
         //public static Coord WorldPositionToCoord(float x, float y, bool flat)
@@ -138,7 +136,7 @@ namespace HexTecGames.GridHexSystem
         public static List<Coord> GetNeighbours(Coord center)
         {
             List<Coord> results = new List<Coord>();
-            foreach (var direction in CubeDirections)
+            foreach (Coord direction in CubeDirections)
             {
                 results.Add(center + direction);
             }
@@ -371,7 +369,7 @@ namespace HexTecGames.GridHexSystem
                 {
                     continue;
                 }
-                foreach (var result in results)
+                foreach (Coord result in results)
                 {
                     if (coords.Contains(result))
                     {
@@ -395,7 +393,7 @@ namespace HexTecGames.GridHexSystem
 
             for (int i = 0; i <= distance; i++)
             {
-                float t = ((float)i / (float)distance);
+                float t = i / (float)distance;
                 pathCubes.Add(Lerp(coord1, coord2, t));
             }
             return pathCubes;
@@ -418,7 +416,7 @@ namespace HexTecGames.GridHexSystem
                 results.Add(center);
                 return results;
             }
-            Coord cube = center + CubeDirections[4] * radius;
+            Coord cube = center + (CubeDirections[4] * radius);
 
             for (int i = 0; i < 6; i++)
             {
@@ -438,7 +436,7 @@ namespace HexTecGames.GridHexSystem
                 results.Add(center);
                 return results;
             }
-            Coord cube = center + CubeDirections[4] * radiusX;
+            Coord cube = center + (CubeDirections[4] * radiusX);
 
             for (int i = 0; i < 6; i++)
             {
@@ -528,9 +526,9 @@ namespace HexTecGames.GridHexSystem
             List<Coord> results = new List<Coord>();
 
             float minX = Mathf.Min(start.x, end.x);
-            float maxX = (Mathf.Max(start.x, end.x));
+            float maxX = Mathf.Max(start.x, end.x);
             float minY = Mathf.Min(start.y, end.y);
-            float maxY = (Mathf.Max(start.y, end.y));
+            float maxY = Mathf.Max(start.y, end.y);
 
             float distanceX = maxX - minX;
             float distanceY = maxY - minY;
@@ -636,7 +634,7 @@ namespace HexTecGames.GridHexSystem
         //}
         public static int WrapDirection(int value)
         {
-            return (value % 6 + 6) % 6;
+            return ((value % 6) + 6) % 6;
         }
 
         public static Coord GetClosestCoordInLine(Coord start, Coord target, int direction)

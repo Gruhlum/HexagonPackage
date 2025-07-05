@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace HexTecGames.GridHexSystem
@@ -35,7 +33,7 @@ namespace HexTecGames.GridHexSystem
         {
             get
             {
-                return HexHeight * 0.75f + SpacingY;
+                return (HexHeight * 0.75f) + SpacingY;
             }
         }
         public float HorizontalSpacing

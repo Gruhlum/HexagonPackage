@@ -1,6 +1,6 @@
 {
   "name": "com.hextecgames.gridhexsystem",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "displayName": "GridHexSystem",
   "description": "This is a Hexagonal Grid System",
   "dependencies": {
@@ -25,5 +25,6 @@
       "path": "Samples/Example 1"
     }
   ],
-  "hideInEditor": true
+  "hideInEditor": true,
+  "unity": "2022.3"
 }

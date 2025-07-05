@@ -1,8 +1,7 @@
-﻿using HexTecGames.Basics;
-using HexTecGames.GridBaseSystem;
-using System;
-using System.Collections;
+﻿using System;
 using System.Collections.Generic;
+using HexTecGames.Basics;
+using HexTecGames.GridBaseSystem;
 using UnityEngine;
 
 namespace HexTecGames.GridHexSystem
@@ -72,7 +71,7 @@ namespace HexTecGames.GridHexSystem
             {
                 if (IsFlat)
                 {
-                    return TileWidth * 0.75f + HorizontalSpacing;
+                    return (TileWidth * 0.75f) + HorizontalSpacing;
                 }
                 else return TileWidth + HorizontalSpacing;
             }
@@ -85,7 +84,7 @@ namespace HexTecGames.GridHexSystem
                 {
                     return TileHeight + VerticalSpacing;
                 }
-                else return TileHeight * 0.75f + VerticalSpacing;
+                else return (TileHeight * 0.75f) + VerticalSpacing;
             }
         }
 
@@ -527,7 +526,7 @@ namespace HexTecGames.GridHexSystem
         }
         public override bool IsInLine(Coord coord1, Coord coord2)
         {
-            var result = Cube.IsInLine(coord1, coord2);
+            bool result = Cube.IsInLine(coord1, coord2);
             return result;
         }
         public override List<Coord> GetLine(Coord start, Coord target)
