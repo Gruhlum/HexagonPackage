@@ -9,14 +9,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eee9c3b01f12ad443b3d186a252e500c, type: 3}
-  m_Name: New Simple Object Data
-  m_EditorClassIdentifier: 
+  m_Script: {fileID: 0}
+  m_Name: New MultiObject 1
+  m_EditorClassIdentifier: HexTecGames.GridBaseSystem:HexTecGames.GridBaseSystem:MultiObjectData
   color: {r: 1, g: 1, b: 1, a: 1}
-  coords:
-  - coord:
-      x: 0
-      y: 0
-      isValid: 0
-    type: 0
   visualPrefab: {fileID: 0}
+  layer: 0
+  coordLists:
+  - layer: 0
+    coords:
+    - x: 0
+      y: 0
+      isValid: 1
