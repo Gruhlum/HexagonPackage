@@ -25,6 +25,6 @@
       "path": "Samples/Example 1"
     }
   ],
-  "hideInEditor": true,
+  "hideInEditor": false,
   "unity": "2022.3"
 }
